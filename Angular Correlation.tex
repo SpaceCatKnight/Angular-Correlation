@@ -70,6 +70,17 @@
 \newcommand{\footnoterecall}[1]{%
   \footnotemark[\value{#1}]
 }
+
+\MakeRobust{\ref}% avoid expanding it when in a textual label
+
+\makeatletter
+\newcommand{\labeltext}[2]{%
+  \@bsphack
+  \csname phantomsection\endcsname % in case hyperref is used
+  \def\@currentlabel{#1}{\label{#2}}%
+  \@esphack
+}
+\makeatother
 	
 \begin{document}
 	
@@ -155,7 +166,7 @@
 		\begin{equation}
 		W(\theta) = 1 + a_1 \cos ^{2} \theta +  a_2 \cos ^{4} \theta
 		\end{equation}		
-		The coefficients $a_1$ and $a_2$ have been theoretically predicted by Dr. Hamilton for all combinations of angular momenta involved by consideration of state transitions using the Clebsch-Gordan-coefficients. These are summarized in figure \ref{fig:coefficients}		
+		The coefficients $a_1$ and $a_2$ have been theoretically predicted by Dr. Hamilton [\ref{source:Hamilton}] for all combinations of angular momenta involved by consideration of state transitions using the Clebsch-Gordan-coefficients. These are summarized in figure \ref{fig:coefficients}		
 		\begin{figure}[H]
 \centering
 \includegraphics[scale=0.4]{Coefficients.png}
@@ -194,9 +205,9 @@ The 'time branch' starts at each detector with a timing filter amplifier (TFA) w
 The computer connected to the MCA records the number of events contained in a histogram where the bins correspond to the delay between the detector signals. This measurement is performed while placing the small detector at different angles $\theta$ relative to the large one, covering a $\theta$-range from 180$^\circ$ to 60$^\circ$ with decrements of 15$^\circ$. Each measurement will last for 20 min. In order to be able to assign an actual time delay to each bin in the histogram, a calibration measurement is carried out where the output of the TAC is observed for different known delays. 
 
 
-\section{Electronic Modules}
+\section{Electronic Modules} \label{sec:modules}
 
-A short description for each electronic moudule used during the experiment is listed here, followed by two photographs showing the actual set-up, previously only illustrated schematically in figure \ref{fig:Electronics1}.
+A short description [\ref{source:manual}] for each electronic moudule used during the experiment is listed here, followed by two photographs showing the actual set-up, previously only illustrated schematically in figure \ref{fig:Electronics1}.
 
 The \textbf{pulse height analyser} (PHA) module creates a TTL output signal for every input signal inside a predifined range.
 \\
@@ -239,14 +250,14 @@ In this experiment, two different kinds of logic pulses are used. A TTL signal h
 
 The detectors used in this experiment are scintillation counters. They consist mainly of a scintillating material that is optically coupled to a photomultiplier tube. 
 
-The molecules of a scintillating material (in this case NaI crystals doped with Thallium) become excited when when radiation passes through and emit light during deexcitation (here with a wavelength of 410 nm). The intensity of this light emission depends linearly on the energy deposited. The light is then detected by a photomultiplier tube.
+The molecules of a scintillating material (in this case NaI crystals doped with Thallium) become excited when when radiation passes through and emit light during deexcitation (here with a wavelength of 410 nm). The intensity of this light emission depends linearly on the energy deposited. The light is then detected by a photomultiplier tube. [\ref{source:WilliamLeo}]
 \begin{figure}[H]
 \centering
 \includegraphics[scale=1]{Photomultiplier.png}
 \caption[Photomultiplier]{Schematic illustration of a photomultiplier tube [\ref{source:WilliamLeo}]}
 \label{fig:Photomultiplier}
 		\end{figure}
-The concept of a photomultiplier tube is illustrated in figure\ref{fig:Photomultiplier}. When light above a threshold energy hits the photocathode, an electron is ejected from this photosensitive material due to the photoelectric effect. The electron is accelerated towards an array of electrodes calles dynodes where the potential is increasing step by step at every dynode. When an electron strikes a dynode, more electrons are ejected from the material which are then accelerated towards the next dynode. Thus, the amount of electrons increases exponentially until they hit the anode in the end of the tube where they induce a measurable current that can be used as an analog signal. The cathode and dynode systems are assumed to be linear, meaning that the current signal at the output is directly proportional to the incoming amount of photons.
+The concept of a photomultiplier tube is illustrated in figure \ref{fig:Photomultiplier}. When light above a threshold energy hits the photocathode, an electron is ejected from this photosensitive material due to the photoelectric effect. The electron is accelerated towards an array of electrodes calles dynodes where the potential is increasing step by step at every dynode. When an electron strikes a dynode, more electrons are ejected from the material which are then accelerated towards the next dynode. Thus, the amount of electrons increases exponentially until they hit the anode in the end of the tube where they induce a measurable current that can be used as an analog signal. The cathode and dynode systems are assumed to be linear, meaning that the current signal at the output is directly proportional to the incoming amount of photons. [\ref{source:WilliamLeo}]
 
 \chapter{Energy Spectrum} \label{sec:EnergySpectrum}
 
@@ -257,7 +268,7 @@ The concept of a photomultiplier tube is illustrated in figure\ref{fig:Photomult
 \caption[EnergySpectra]{Energy spectra of each detector with tagged $\gamma$-ray absorption lines and typical detection byproducts}
 \label{fig:EnergySpectra}
 	\end{figure}	
-		In addition to the two sharp gamma ray peaks, there is a typical Compton continuum visible on the left. The Compton edge can be obtained as follows [\ref{source:GlennLnoll}]
+		In addition to the two sharp gamma ray peaks, there is a typical Compton continuum visible on the left. The Compton edge can be obtained as follows [\ref{source:GlennKnoll}]
 	\begin{equation}
 E_{CE} = E_{\gamma} \cdot \left(1 - \frac{1}{1+2 E_{\gamma}/m_ec^2} \right).
 \end{equation}
@@ -288,12 +299,135 @@ E_{CE} = E_{\gamma} \cdot \left(1 - \frac{1}{1+2 E_{\gamma}/m_ec^2} \right).
 \label{fig:TimeCal2}
 	\end{figure}
 
+\chapter{Experimental Results}
+For each angle in the range of $60^{\circ}$ to $180^{\circ}$ with steps of $15^{\circ}$ we took three 20 minute measurements: The number of coincident events measured with the software Maestro $r_m$, the number of coincident events measured by one of the scalers $r_s$, and the total number of events measured by the fixed detectors $r_{tot}$. The results of these measurements for each angle are listed in table \ref{tab:measurement}. 
+%
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{lllll}
+Angle $\theta$ [$^{\circ}$] & $r_{m}$ [Hz] & $r_{s}$ [Hz] & $r_{tot}$ [Hz]\\
+\hline
+60 	& 3.54 & 4.34 & 1470\\
+75 	& 3.35 & 4.09 & 1469\\
+90 	& 3.33 & 4.12 & 1469\\
+105 	& 3.39 & 4.16 & 1468\\
+120	& 3.44 & 4.20 & 1464\\
+135	& 3.52 & 4.29 & 1464\\
+150	& 3.60 & 4.35 & 1468\\
+165	& 3.57 & 4.35 & 1466\\
+180	& 3.67 & 4.31 & 1453\\ 
+\end{tabular}
+\label{tab:measurement}
+\end{center}
+\end{table}
+%
+The software Maestro gave us not only the number of coincident events as listed in the table above, but the number of events for a 8191 ADC channels. As an example, the histogram for $\theta = 90^{\circ}$ is shown in figure \ref{fig:histogramraw}, the rest can be found in the appendix.
+%
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{90degraw.png}
+\caption[Histogram]{Histogram with ADC channels for $\theta = 90^{\circ}$}
+\label{fig:hist120}
+\end{figure}
+%
+
+
+
+\chapter{Data Analysis}
+Since each measurement lasted for 20 minutes, the statistical errors on these measurements should be negligible. To check this assumption we calculated the statistical uncertainty on the measurement made by scaler 1 (BIG NUMBERS). Since scaler 1 was counting the number of events registered by the fixed detector, we would expect it to measure the same value in each of the $n$ measuring periods. The relative statistical uncertainty can thus be calculated by
+%
+\begin{align}
+\frac{u_r}{\overline{r}} = \frac{1}{\overline{r}}\sqrt{\frac{\sum_i (r_i - \overline{r})^2}{n(n-1)}} \approx 0.1\%
+\end{align}
+%
+Assuming the same statistical uncertainty on the Maestro data $r_m$ which consists of values in a range of $5\%$ around their mean, this statistical uncertainty can indeed be neglected.
+
+
+
+We started by rescaling the x-axis from ADC channels to time. To make sure there are enough counts per bin we had to rebin the data. We merged 20 bins to one, giving us a time resolution of $0.22\,$ns. We then used the $\chi^2$-method to fit a Gaussian function on each histogram, taking into account an uncertainty on each bin of 
+%
+\begin{align}
+u_{bin} = \sqrt{n_{bin}}
+\end{align}
+
+Figure \ref{fig:hist120} shows the histogram with Gaussian fit for the angle $\theta = 90^{\circ}$.
+%
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.65]{90deg.png}
+\caption[Histogram]{Histogram with Gaussian Fit for angle $\theta = 90^{\circ}$}
+\label{fig:hist120}
+\end{figure}
+%
+We noticed that the measured data does not show a single peak at the set delay time, but instead two peaks slightly below and above. WHY? In a next step, we subtracted the background from the data. In order to estimate the background, we took the average of the bins in a range of [$3\sigma$, $4\sigma$] on both sides of the mean $\mu$. Then we subtracted this average from each bin in the histogram. We then summed all the bins in the histogram to get the number of coincident events per second $r_c$ for each angle. Table \ref{tab:nevents} shows the result for each angle compared to the number of coincident events per second $r_{s}$ as measured by the scaler.
+%
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{llll}
+Angle $\theta$ [$^{\circ}$] & $r_{c}$ [Hz] & $r_{s}$ [Hz]\\
+\hline
+60 	& 3.39 & 4.34\\
+  75 	& 3.22 & 4.09\\
+  90 	& 3.25 & 4.12\\
+105 	& 3.33 & 4.16\\
+120	& 3.37 & 4.20\\
+135	& 3.44 & 4.29\\
+150	& 3.48 & 4.35\\
+165	& 3.49 & 4.35\\
+180	& 3.54 & 4.31\\ 
+\end{tabular}
+\caption{Rate for each angle}
+\label{tab:nevents}
+\end{center}
+\end{table}
+%
+To be able to compare this data to the predicted value, we normalized the data to $r_{c}(\theta=90^{\circ})$. Then we used the $\chi^2$-method to fit a function in the form of equation \ref{distribution} to the data points (figure \ref{fig:distribution}).
+%
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.65]{dist.png}
+\caption[Distribution]{Normalized Angular Distribution}
+\label{fig:distribution}
+\end{figure}
+%
+For the coefficients $a_i$ we got:
+%
+\begin{align*}
+a_0 &= 1.003 \pm 0.008\\
+a_1 &= 0.157 \pm 0.049\\
+a_2 &= -0.075 \pm 0.047\\
+\end{align*}
+%
+comparing this the literature values
+%
+\begin{align*}
+a_{0,lit} &= 1\\
+a_{1,lit} &= 1/8 = 0.125\\
+a_{2,lit} &= 1/24 \approx 0.042\\
+\end{align*}
+%
+we see that $a_{0,lit}$ and $a_{1,lit}$ are within the range while $a_{2,lit}$ is not. From figure \ref{fig:distribution} it is also clearly visible that our measured data does not verify the prediction for angles starting at $\theta=135^{\circ}$. In the range of $\theta \in \left[60^{\circ},120^{\circ}\right]$ the measured data corresponds to the prediction.
+
 
 \chapter{Appendix}
 
 versprochener unskalierter Energieplot nicht vergessen
 
 \section{References}
+
+%[\ref{source:manual}]: Instruction manual and assistants \labeltext{1}{source:manual}
+%\\ 
+%[\ref{source:Hamilton}]: Donald R. Hamilton Phys. Rev. 58, 122 (1940) \labeltext{2}{source:Hamilton}
+%\\ 
+%[\ref{source:WilliamLeo}]: Dr. William R. Leo - Techniques for Nuclear and Particle Physics Experiments: A How-to Approach (1994)\labeltext{3}{source:WilliamLeo}
+%\\ 
+%[\ref{source:GlennKnoll}]: Glenn F. Knoll - Radiation Detection and Measurement (2010) \labeltext{4}{source:GlennKnoll}
+
+
+
+
+
+
 
 %Compton Edge Formula, Source: Glenn F. Knoll-Radiation Detection and Measurement-Wiley (2010)
 
