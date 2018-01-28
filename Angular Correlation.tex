@@ -1,27 +1,28 @@
 \documentclass[a4paper,parskip,11pt, DIV12]{scrreprt}
 
-\usepackage[english]{babel} % Für Deutsch [english] zu [ngerman] ändern. 
+\usepackage[english]{babel} % FÃŒr Deutsch [english] zu [ngerman] Ã€ndern. 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{blindtext}
 \usepackage{graphicx}
 \usepackage{subfigure}
-\renewcommand{\familydefault}{\sfdefault}
-\usepackage{helvet}
+%\renewcommand{\familydefault}{\sfdefault}
 \usepackage{fancyhdr}
 \usepackage{amsmath}
-\usepackage{mdwlist} %Benötigt für Abstände in Aufzählungen zu löschen
+\usepackage{mdwlist} %BenÃ¶tigt fÃŒr AbstÃ€nde in AufzÃ€hlungen zu lÃ¶schen
 \usepackage{here}
 \usepackage{calc}
 \usepackage{hhline}
 \usepackage{marginnote}
 \usepackage{chngcntr}
+\usepackage{helvet}
 \usepackage{tabularx}
-\usepackage{titlesec} % Textüberschriften anpassen
+\usepackage{titlesec} % TextÃŒberschriften anpassen
+\setkomafont{sectioning}{\rmfamily}{\bfseries}
 
-% \titleformat{Überschriftenklasse}[Absatzformatierung]{Textformatierung} {Nummerierung}{Abstand zwischen Nummerierung und Überschriftentext}{Code vor der Überschrift}[Code nach der Überschrift]
+% \titleformat{Ãberschriftenklasse}[Absatzformatierung]{Textformatierung} {Nummerierung}{Abstand zwischen Nummerierung und Ãberschriftentext}{Code vor der Ãberschrift}[Code nach der Ãberschrift]
 
-% \titlespacing{Überschriftenklasse}{Linker Einzug}{Platz oberhalb}{Platz unterhalb}[rechter Einzug]
+% \titlespacing{Ãberschriftenklasse}{Linker Einzug}{Platz oberhalb}{Platz unterhalb}[rechter Einzug]
 
 \titleformat{\chapter}{\LARGE\bfseries}{\thechapter\quad}{0pt}{}
 \titleformat{\section}{\Large\bfseries}{\thesection\quad}{0pt}{}
@@ -37,33 +38,38 @@
 %\usepackage[onehalfspacing]{setspace}
 
 \usepackage[
-%includemp,				%marginalien in Textkörper einbeziehen
-%includeall,
-%showframe,				%zeigt rahmen zum debuggen		
-marginparwidth=25mm, 	%breite der marginalien
-marginparsep=5mm,		%abstand marginalien - text
-reversemarginpar,		%marginalien links statt rechts
-%left=50mm,				%abstand von Seitenraendern
+			%includemp,				%marginalien in TextkÃ¶rper einbeziehen
+			%includeall,
+			%showframe,				%zeigt rahmen zum debuggen		
+			marginparwidth=25mm, 	%breite der marginalien
+			marginparsep=5mm,		%abstand marginalien - text
+			reversemarginpar,		%marginalien links statt rechts
+			%left=50mm,				%abstand von Seitenraendern
 %			top=25mm,				%
 %			bottom=50mm,
-]{geometry}		
+			]{geometry}		
 
 %Bibliographie- Einstellungen
 \usepackage[babel,german=quotes]{csquotes}
 \usepackage[
-backend=bibtex8, 
-natbib=true,
-style=numeric,
-sorting=none
+   backend=bibtex8, 
+   natbib=true,
+    style=numeric,
+    sorting=none
 ]{biblatex}
 \bibliography{Quelle}
 %Fertig Bibliographie- Einstellungen
 
 \usepackage{hyperref}
 
-\newenvironment{conditions}
-{\par\vspace{\abovedisplayskip}\noindent\begin{tabular}{>{$}l<{$} @{${}={}$} l}}
-	{\end{tabular}\par\vspace{\belowdisplayskip}}
+\newcommand{\footnoteremember}[2]{
+  \footnote{#2}
+  \newcounter{#1}
+  \setcounter{#1}{\value{footnote}}
+}
+\newcommand{\footnoterecall}[1]{%
+  \footnotemark[\value{#1}]
+}
 	
 \begin{document}
 	
@@ -169,10 +175,135 @@ sorting=none
 
 \section{Experimental Set-Up}
 
+		The $^{60}$Co-sample is placed in the center of a goniometer table where a large scintillation counter $D_l$ is set up at a fixed position, measured to be at a distance of $r_l$ = 216 mm from the sample, pointing to the center. A smaller scintillation counter $D_s$ is mounted on a rotatable arm, also pointing to the center. The angle relative to the fixed detector can be read off the edge of the goniometer table. The distance $r_S$ from the small detector to the sample can be adjusted. Here we chose 87 mm in order to achieve the same solid angle coverage as the large detector. This was deduced from the definition of the solid angle:\begin{eqnarray}
+&\Omega  = \frac{A}{r^2} = \frac{\pi}{4} \frac{d^2}{r^2} \\
+&\Omega_l = \Omega_s \quad \iff \quad r_s = \frac{d_s}{d_l} r_l
+\end{eqnarray} and that the diameters of the detectors were measured to be $d_l$ = 139 mm for the larger one and $d_s$ = 56 mm for the small detector. 
+
+The signal from each detector is split into two branches which will be called the 'energy branch' and the 'time branch' (see figure \ref{fig:Electronics1}). The modules in these branches are briefly characterized in section \ref{sec:modules}. The idea behind the 'time branch' is to record any coincident signal with the corresponding deviation from exact coincidence, which is expected to be gaussian distributed. Since the expectation value of the time delay between coincident events is zero and the time-to-amplitude converter (TAC) cannot record negative delays, the $D_s$-signal is shifted by a time that is large compared to the expected deviations.  The 'energy branch' is supposed to eliminate random coincidents by opening the gate of the multichannel analyzer (MCA) for the 'time branch' signals only when the same event is measured by both detectors.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.21]{KT-Elektronik.png}
+\caption[Electronics1]{Flowchart showing all the electronic modules used for processing the detector signals}
+\label{fig:Electronics1}
+		\end{figure}
+The 'time branch' starts at each detector with a timing filter amplifier (TFA) which is used to turn the detector signal into a clear analog signal. This signal is subsequently turned into a digital NIM pulse in a discriminator. The signal originating from $D_l$ is forwarded into the start-channel of a TAC. The signal from $D_S$, on the other hand, is first delayed in a delay module by $t_0$ = 48 ns before being forwarded into the stop-channel of the TAC, which transfers a pulse to the ADC-channel of the MCA with an amplitude proportional to the time delay between the two incoming signals. 
+
+ The 'energy branch' starts at each detector with an amplifier containing a pulse height analyzer (PHA). The signal produced by the detectors represent a broad energy spectrum (see section \ref{sec:EnergySpectrum}). Since only the $\gamma$-decays are of interest, the window of the PHA is set such that only the TTL pulses corresponding to the $\gamma$-ray emission are passed to the level adapter (LA), where they are converted into NIM signals. After the conversion, they pass a fan-out module where the signal of the $D_l$ is split into two identical pulses and one of them enters a scaler S1 that counts the rate of events. This data is used for a cross-check of the measurement. The signals of the two detectors merge into an AND-gate inside a coincidence module. This module returns a pulse only if there is a signal coming from both detectors at the same time. The output signal is then forwarded into another scaler S2, which is also used for cross-checking, and into a delay-trigger that generates a rectangular TTL signal with adjustable delay and width. This signal is used as the gate input for the MCA
+
+The computer connected to the MCA records the number of events contained in a histogram where the bins correspond to the delay between the detector signals. This measurement is performed while placing the small detector at different angles $\theta$ relative to the large one, covering a $\theta$-range from 180$^\circ$ to 60$^\circ$ with decrements of 15$^\circ$. Each measurement will last for 20 min. In order to be able to assign an actual time delay to each bin in the histogram, a calibration measurement is carried out where the output of the TAC is observed for different known delays. 
+
+
 \section{Electronic Modules}
 
-\chapter{Energy Spectrum}
+A short description for each electronic moudule used during the experiment is listed here, followed by two photographs showing the actual set-up, previously only illustrated schematically in figure \ref{fig:Electronics1}.
+
+The \textbf{pulse height analyser} (PHA) module creates a TTL output signal for every input signal inside a predifined range.
+\\
+The \textbf{timing filter amplifier} (TFA) allows to adjust the shape of a signal according to  the desired tinme constants.
+\\
+The \textbf{discriminator} turns an analog input signal above a certain threshold into a logic (NIM) pulse whose width is adjustable.
+\\
+The \textbf{level adapter} (LA) converts logic TTL signals into NIM signals or the other way around.
+\\
+The \textbf{fan-out} module splits an input signal into several identical output signals.
+\\
+The \textbf{coincidence module} contains a logic AND-gate that generates a NIM pulse whenever there is a signal on all input channels.
+\\
+The \textbf{scaler} counts the number of incoming signals. 
+\\
+The \textbf{delay module} is a passive module that delays the incoming signal by a desired amount of time.
+\\
+The \textbf{delay trigger} turns a rectangular input signal into an output signal with adjustable length and delay.
+\\
+The \textbf{time-to-amplitude-converter} (TAC) returns a pulse whose amplitude is proportional to the time delay between the signal at the start channel and the signal at the stop channel
+\\
+The \textbf{multichannel analyser} (MCA) takes pulses of different amplitudes as input and returns a histogram that counts the number of pulses per amplitude. It also contains a Gate channel which allows to register an event signal only when there is a signal on the Gate channel.
+\\
+In this experiment, two different kinds of logic pulses are used. A TTL signal has a baseline of +/- 0.5V and is a rectangular pulse corresponds to a voltage of 5V. A NIM signal, on the other hand, is interpreted as a pulse when it falls to -800mV.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{Rack1-beschriftet.jpg}
+\caption[Electronics2]{Photograph of the actual modules during the experiment: 1)PHA of $D_l$, 2)TFA of $D_l$, 3)PHA of $D_s$, 4)TFA of $D_s$, 5)LA, 6)Fan-out, 7)Coincidence module, 8)MCA}
+\label{fig:Electronics2}
+		\end{figure}
+		\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{Rack2-beschriftet.jpg}
+\caption[Electronics3]{Photograph of the actual modules during the experiment: 9)Fan-out, 10)Discriminator, 11)Delay module, 12)TAC, 13)Scaler S1, 14)Scaler S2, 15)Delay Trigger}
+\label{fig:Electronics3}
+		\end{figure}
+
+\section{Scintillation Counters and Photomultipliers}
+
+The detectors used in this experiment are scintillation counters. They consist mainly of a scintillating material that is optically coupled to a photomultiplier tube. 
+
+The molecules of a scintillating material (in this case NaI crystals doped with Thallium) become excited when when radiation passes through and emit light during deexcitation (here with a wavelength of 410 nm). The intensity of this light emission depends linearly on the energy deposited. The light is then detected by a photomultiplier tube.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1]{Photomultiplier.png}
+\caption[Photomultiplier]{Schematic illustration of a photomultiplier tube [\ref{source:WilliamLeo}]}
+\label{fig:Photomultiplier}
+		\end{figure}
+The concept of a photomultiplier tube is illustrated in figure\ref{fig:Photomultiplier}. When light above a threshold energy hits the photocathode, an electron is ejected from this photosensitive material due to the photoelectric effect. The electron is accelerated towards an array of electrodes calles dynodes where the potential is increasing step by step at every dynode. When an electron strikes a dynode, more electrons are ejected from the material which are then accelerated towards the next dynode. Thus, the amount of electrons increases exponentially until they hit the anode in the end of the tube where they induce a measurable current that can be used as an analog signal. The cathode and dynode systems are assumed to be linear, meaning that the current signal at the output is directly proportional to the incoming amount of photons.
+
+\chapter{Energy Spectrum} \label{sec:EnergySpectrum}
+
+		Figure \ref{fig:EnergySpectra} shows the energy spectra measured at the two detectors correspondingly where the horizontal axis has been rescaled compared to he original measurement in figure \ref{fig:EnergySpectraUnscaled} in the appendix. In the original measurement, the number of events was a function of channels whose absolute values do not have any physical meaning. The two sharp peaks in the right half of the plot could be easily identified as the typical $\gamma$-decay absorption lines. Their corresponding energy values of $E_{\gamma,1}$ = 1172 keV and $E_{\gamma}$ = 1332 keV are well known in the literature and were used for the energy calibration that made the rescaling to energy units possible.	
+		\begin{figure}[H]
+\centering
+\includegraphics[scale=0.3]{EnergySpectra.png}
+\caption[EnergySpectra]{Energy spectra of each detector with tagged $\gamma$-ray absorption lines and typical detection byproducts}
+\label{fig:EnergySpectra}
+	\end{figure}	
+		In addition to the two sharp gamma ray peaks, there is a typical Compton continuum visible on the left. The Compton edge can be obtained as follows [\ref{source:GlennLnoll}]
+	\begin{equation}
+E_{CE} = E_{\gamma} \cdot \left(1 - \frac{1}{1+2 E_{\gamma}/m_ec^2} \right).
+\end{equation}
+		This yields a value of $E_{CE,1}$ = 963 keV for the first $\gamma$-ray and $E_{CE,2}$ = 1118 keV for the second $\gamma$-ray. The first Compton edge is clearly visible in the plots while the second one coincides with the finite width of the first $\gamma$-ray line. Thus, it is clear that the Compton continuum does not vanish completely after the first edge.
+
+		There is also an additional peak visible in both plots at around 200 keV in the case of the small detector and 150 keV for the large one. This is a very common effect that can be traced back to backscattering which originates from $\gamma$-rays that have Compton scattered in the material surrounding the detector material before being detected. In the literature, this peak is said to be expected at around 200 keV, which is in very good agreement with the measurement. It also makes sense that this peak is not the same for both detectors, since they are not identical models.
+
 
 \chapter{Calibration}
+
+\section{Time Calibration}
+
+		Equivalently to the energy calibration in section [\ref{sec:EnergySpectrum}], the MCA transmitted the number of events as a function of the corresponding channel to the computer. In order to convert the channel number to the corresponding physical time delay, a time calibration measurement has been performed. This consisted of connecting the signal of the same detector to the TAC where the copy connected to the stop-channel first passed the delay module. The signal that the TAC induces for various delay settings in the MCA could then be directly observed in the computer. Data was collected and saved for five different delay settings, which can be seen in figure \ref{fig:TimeCal1}. In this case, the number of events in the vertical axis does not contribute any physical meaning.
+		\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{TimeCalibration1.png}
+\caption[TimeCalibration1]{Time calibration measurement where each line corresponds to a known delay time}
+\label{fig:TimeCal1}
+	\end{figure}
+	From this, we could deduce which channel corresponds to which magnitude of delay. The channel number and ther corresponding delay time were plotted and a linear fit through the data points could be performed (see figure \ref{fig:TimeCal2}), which yields the following rescaling function where $\hat{T}$ corresponds to the time-scale in [ns] and $\hat{C}$ to the channel-scale
+	\begin{equation}
+	\hat{T} = \hat{C} \cdot 0.0111ns + 5.2041ns 
+	\end{equation}
+	\begin{figure}[H]
+\centering
+\includegraphics[scale=0.39]{TimeCalibration2.png}
+\caption[TimeCalibration2]{Linear fit through the corresponding delay-channel-points}
+\label{fig:TimeCal2}
+	\end{figure}
+
+
+\chapter{Appendix}
+
+versprochener unskalierter Energieplot nicht vergessen
+
+\section{References}
+
+%Compton Edge Formula, Source: Glenn F. Knoll-Radiation Detection and Measurement-Wiley (2010)
+
+%Dr. William R. Leo (auth.)-Techniques for Nuclear and Particle Physics Experiments_ A How-to Approach-Springer-Verlag Berlin Heidelberg (1994)
+
+%https://journals.aps.org/pr/pdf/10.1103/PhysRev.78.558
+
+%https://journals.aps.org/pr/pdf/10.1103/PhysRev.58.122
+
+%Instruction manual and assistant
+
 
 \end{document}
