@@ -322,7 +322,7 @@ Angle $\theta$ [$^{\circ}$] & $r_{m}$ [Hz] & $r_{s}$ [Hz] & $r_{tot}$ [Hz]\\
 \end{center}
 \end{table}
 %
-The software Maestro gave us not only the number of coincident events as listed in the table above, but the number of events for 8191 ADC channels. As an example, the histogram for $\theta = 90^{\circ}$ is shown in figure \ref{fig:histogramraw}, the rest can be found in the appendix.
+The software Maestro gave us not only the number of coincident events as listed in the table above, but the number of events for 8191 ADC channels. As an example, the histogram for $\theta = 90^{\circ}$ is shown in figure \ref{fig:histogramraw}, the rest can be found in the appendix \ref{app:histogramdata}.
 %
 \begin{figure}[H]
 \centering
@@ -351,7 +351,7 @@ We started by rescaling the x-axis from ADC channels to time (see section \ref{s
 \Delta_{bin} = \sqrt{n_{bin}}
 \end{align}
 
-Figure \ref{fig:hist120} shows the histogram with Gaussian fit for the angle $\theta = 90^{\circ}$.
+Figure \ref{fig:hist120} shows the histogram with Gaussian fit for the angle $\theta = 90^{\circ}$. The rest of the histograms can be found in the appendix \ref{app:histogram}
 %
 \begin{figure}[H]
 \centering
@@ -420,6 +420,40 @@ The scaler S2 merely measures the amount of approximately coincident events from
 \chapter{Appendix}
 
 versprochener unskalierter Energieplot nicht vergessen
+
+\section{Experimental Results}\label{app:histogramraw}
+%
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.33\textwidth]{60degraw.png}\hfill
+\includegraphics[width=0.33\textwidth]{75degraw.png}\hfill
+\includegraphics[width=0.33\textwidth]{90degraw.png}\\
+\includegraphics[width=0.33\textwidth]{105degraw.png}\hfill
+\includegraphics[width=0.33\textwidth]{120degraw.png}\hfill
+\includegraphics[width=0.33\textwidth]{135degraw.png}\\
+\includegraphics[width=0.33\textwidth]{150degraw.png}\hfill
+\includegraphics[width=0.33\textwidth]{165degraw.png}\hfill
+\includegraphics[width=0.33\textwidth]{180degraw.png}
+\caption{Histograms with ADC channels for all angles}
+\end{figure}
+%
+
+\section{Data Analysis}\label{app:histogram}
+%
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.33\textwidth]{60deg.png}\hfill
+\includegraphics[width=0.33\textwidth]{75deg.png}\hfill
+\includegraphics[width=0.33\textwidth]{90deg.png}\\
+\includegraphics[width=0.33\textwidth]{105deg.png}\hfill
+\includegraphics[width=0.33\textwidth]{120deg.png}\hfill
+\includegraphics[width=0.33\textwidth]{135deg.png}\\
+\includegraphics[width=0.33\textwidth]{150deg.png}\hfill
+\includegraphics[width=0.33\textwidth]{165deg.png}\hfill
+\includegraphics[width=0.33\textwidth]{180deg.png}
+\caption{Rebinned histograms on time axis with background subtracted and fitted Gaussian for all angles}
+\end{figure}
+
 
 \section{References}
 
