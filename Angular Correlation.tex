@@ -163,7 +163,7 @@
 		W(\theta) = 1 + \sum^l_1 a_i \cos ^{2i} \theta
 		\end{equation}	
 		This function describes the probability for the latter gamma ray to be emitted at an angle $\theta$ from the first one. 2$l$ is the order of the lowest multipole in the cascade. In case of the $^{60}$Co decay, both gamma rays are emitted during a transision of $\Delta l$ = 2 and positive parity, so the dominant contribution is the electric quadrupole and the correlation function reduces to:	
-		\begin{equation}
+		\begin{equation} \label{eq:Ang1}
 		W(\theta) = 1 + a_1 \cos ^{2} \theta +  a_2 \cos ^{4} \theta
 		\end{equation}		
 		The coefficients $a_1$ and $a_2$ have been theoretically predicted by Dr. Hamilton [\ref{source:Hamilton}] for all combinations of angular momenta involved by consideration of state transitions using the Clebsch-Gordan-coefficients. These are summarized in figure \ref{fig:coefficients}		
@@ -173,7 +173,7 @@
 \caption[Coefficients]{Coefficients $a_1$ and $a_2$ for different combinations of $J_1$ and $J_2$ for an atom deexciting into the ground state $J_1$ = 0 [\ref{source:manual}]}
 \label{fig:coefficients}
 		\end{figure}		
-		Since the angular monenta of $J_3$ = 4, $J_2$ = 2, $J_1$ = 0 are assumed for the $^{60}$Co decay, the expected correlation function has the following explicit form:		
+		Since the angular momenta of $J_3$ = 4, $J_2$ = 2, $J_1$ = 0 are assumed for the $^{60}$Co decay, the expected correlation function has the following explicit form:		
 		\begin{equation} \label{eq:AngularCorrelation}
 		W(\theta) = 1 + \frac{1}{8} \cos ^{2} \theta +  \frac{1}{24} \cos ^{4} \theta
 		\end{equation} 
@@ -184,23 +184,23 @@
 		
 \chapter{Measurement Principle}	
 
-\section{Experimental Set-Up}
+\section{Experimental Set-Up} \label{sec:setup}
 
 		The $^{60}$Co-sample is placed in the center of a goniometer table where a large scintillation counter $D_l$ is set up at a fixed position, measured to be at a distance of $r_l$ = 216 mm from the sample, pointing to the center. A smaller scintillation counter $D_s$ is mounted on a rotatable arm, also pointing to the center. The angle relative to the fixed detector can be read off the edge of the goniometer table. The distance $r_S$ from the small detector to the sample can be adjusted. Here we chose 87 mm in order to achieve the same solid angle coverage as the large detector. This was deduced from the definition of the solid angle:\begin{eqnarray}
 &\Omega  = \frac{A}{r^2} = \frac{\pi}{4} \frac{d^2}{r^2} \\
 &\Omega_l = \Omega_s \quad \iff \quad r_s = \frac{d_s}{d_l} r_l
-\end{eqnarray} and that the diameters of the detectors were measured to be $d_l$ = 139 mm for the larger one and $d_s$ = 56 mm for the small detector. 
+\end{eqnarray} with diameters $d_l$ = 139 mm for the large detector and $d_s$ = 56 mm for the small one. The high-voltage bias for the two detectors were set to $U_l$ = 1400 V for $D_l$ and $U_s$ =1000 V for $D_s$. The gains of the amplifiers to 35 for $D_l$ and 69 for $D_s$. 
 
 The signal from each detector is split into two branches which will be called the 'energy branch' and the 'time branch' (see figure \ref{fig:Electronics1}). The modules in these branches are briefly characterized in section \ref{sec:modules}. The idea behind the 'time branch' is to record any coincident signal with the corresponding deviation from exact coincidence, which is expected to be gaussian distributed. Since the expectation value of the time delay between coincident events is zero and the time-to-amplitude converter (TAC) cannot record negative delays, the $D_s$-signal is shifted by a time that is large compared to the expected deviations.  The 'energy branch' is supposed to eliminate random coincidents by opening the gate of the multichannel analyzer (MCA) for the 'time branch' signals only when the same event is measured by both detectors.
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.21]{KT-Elektronik.png}
+\includegraphics[width=1\textwidth]{KT-Elektronik.png}
 \caption[Electronics1]{Flowchart showing all the electronic modules used for processing the detector signals}
 \label{fig:Electronics1}
 		\end{figure}
-The 'time branch' starts at each detector with a timing filter amplifier (TFA) which is used to turn the detector signal into a clear analog signal. This signal is subsequently turned into a digital NIM pulse in a discriminator. The signal originating from $D_l$ is forwarded into the start-channel of a TAC. The signal from $D_S$, on the other hand, is first delayed in a delay module by $t_0$ = 48 ns before being forwarded into the stop-channel of the TAC, which transfers a pulse to the ADC-channel of the MCA with an amplitude proportional to the time delay between the two incoming signals. 
+The 'time branch' starts at each detector with a timing filter amplifier (TFA) which is used to turn the detector signal into a clear analog signal. This signal is subsequently turned into a digital NIM pulse in a discriminator. The signal originating from $D_l$ is forwarded into the start-channel of a TAC. The signal from $D_s$, on the other hand, is first delayed in a delay module by $t_0$ = 48 ns before being forwarded into the stop-channel of the TAC, which transfers a pulse to the ADC-channel of the MCA with an amplitude proportional to the time delay between the two incoming signals. 
 
- The 'energy branch' starts at each detector with an amplifier containing a pulse height analyzer (PHA). The signal produced by the detectors represent a broad energy spectrum (see section \ref{sec:EnergySpectrum}). Since only the $\gamma$-decays are of interest, the window of the PHA is set such that only the TTL pulses corresponding to the $\gamma$-ray emission are passed to the level adapter (LA), where they are converted into NIM signals. After the conversion, they pass a fan-out module where the signal of the $D_l$ is split into two identical pulses and one of them enters a scaler S1 that counts the rate of events. This data is used for a cross-check of the measurement. The signals of the two detectors merge into an AND-gate inside a coincidence module. This module returns a pulse only if there is a signal coming from both detectors at the same time. The output signal is then forwarded into another scaler S2, which is also used for cross-checking, and into a delay-trigger that generates a rectangular TTL signal with adjustable delay and width. This signal is used as the gate input for the MCA
+ The 'energy branch' starts at each detector with an amplifier containing a pulse height analyzer (PHA). The signal produced by the detectors represents a broad energy spectrum (see section \ref{sec:EnergySpectrum}). Since only the $\gamma$-decays are of interest, the window of the PHA is set such that only the TTL pulses corresponding to the $\gamma$-ray emission are passed to the level adapter (LA), where they are converted into NIM signals. After the conversion, they pass a fan-out module where the signal of the $D_l$ is split into two identical pulses and one of them enters a scaler S1 that counts the rate of events. This data is used for a cross-check of the measurement. The signals of the two detectors merge into an AND-gate inside a coincidence module. This module returns a pulse only if there is a signal coming from both detectors at the same time. The output signal is then forwarded into another scaler S2, which is also used for cross-checking, and into a delay-trigger that generates a rectangular TTL signal with adjustable delay and width. This signal is used as the gate input for the MCA.
 
 The computer connected to the MCA records the number of events contained in a histogram where the bins correspond to the delay between the detector signals. This measurement is performed while placing the small detector at different angles $\theta$ relative to the large one, covering a $\theta$-range from 180$^\circ$ to 60$^\circ$ with decrements of 15$^\circ$. Each measurement will last for 20 min. In order to be able to assign an actual time delay to each bin in the histogram, a calibration measurement is carried out where the output of the TAC is observed for different known delays. 
 
@@ -250,7 +250,7 @@ In this experiment, two different kinds of logic pulses are used. A TTL signal h
 
 The detectors used in this experiment are scintillation counters. They consist mainly of a scintillating material that is optically coupled to a photomultiplier tube. 
 
-The molecules of a scintillating material (in this case NaI crystals doped with Thallium) become excited when when radiation passes through and emit light during deexcitation (here with a wavelength of 410 nm). The intensity of this light emission depends linearly on the energy deposited. The light is then detected by a photomultiplier tube. [\ref{source:WilliamLeo}]
+The molecules of a scintillating material (in this case NaI crystals doped with Thallium) become excited when radiation passes through and emit light during deexcitation (here with a wavelength of 410 nm). The intensity of this light emission depends linearly on the energy deposited. The light is then detected by a photomultiplier tube. [\ref{source:WilliamLeo}]
 \begin{figure}[H]
 \centering
 \includegraphics[scale=1]{Photomultiplier.png}
@@ -261,7 +261,7 @@ The concept of a photomultiplier tube is illustrated in figure \ref{fig:Photomul
 
 \chapter{Energy Spectrum} \label{sec:EnergySpectrum}
 
-		Figure \ref{fig:EnergySpectra} shows the energy spectra measured at the two detectors correspondingly where the horizontal axis has been rescaled compared to he original measurement in figure \ref{fig:EnergySpectraUnscaled} in the appendix. In the original measurement, the number of events was a function of channels whose absolute values do not have any physical meaning. The two sharp peaks in the right half of the plot could be easily identified as the typical $\gamma$-decay absorption lines. Their corresponding energy values of $E_{\gamma,1}$ = 1172 keV and $E_{\gamma}$ = 1332 keV are well known in the literature and were used for the energy calibration that made the rescaling to energy units possible.	
+		Figure \ref{fig:EnergySpectra} shows the energy spectra measured at the two detectors correspondingly where the horizontal axis has been rescaled. The original scale can be found in figure \ref{fig:EnergySpectraUnscaled} in the appendix, where the number of events was merely a function of ADC-channels. The two sharp peaks in the right half of the plot could be easily identified as the typical $\gamma$-decay absorption lines. Their corresponding energy values of $E_{\gamma,1}$ = 1172 keV and $E_{\gamma}$ = 1332 keV are well known in the literature and were used for the energy calibration that made the rescaling to energy units possible.	
 		\begin{figure}[H]
 \centering
 \includegraphics[scale=0.3]{EnergySpectra.png}
@@ -279,16 +279,16 @@ E_{CE} = E_{\gamma} \cdot \left(1 - \frac{1}{1+2 E_{\gamma}/m_ec^2} \right).
 
 \chapter{Calibration}
 
-\section{Time Calibration}
+\section{Time Calibration} \label{sec:TimeCal}
 
-		Equivalently to the energy calibration in section [\ref{sec:EnergySpectrum}], the MCA transmitted the number of events as a function of the corresponding channel to the computer. In order to convert the channel number to the corresponding physical time delay, a time calibration measurement has been performed. This consisted of connecting the signal of the same detector to the TAC where the copy connected to the stop-channel first passed the delay module. The signal that the TAC induces for various delay settings in the MCA could then be directly observed in the computer. Data was collected and saved for five different delay settings, which can be seen in figure \ref{fig:TimeCal1}. In this case, the number of events in the vertical axis does not contribute any physical meaning.
+		Equivalently to the energy calibration in section [\ref{sec:EnergySpectrum}], the MCA transmitted the number of events as a function of the corresponding channel to the computer. In order to convert the channel number to the corresponding physical time delay, a time calibration measurement has been performed. This consisted of splitting the signal of one of the detectors and then connecting one copy directly to the start-channel of the TAC and the other one to the stop-channel after passing the delay module first. The signal that the TAC induces for various delay settings in the MCA could then be directly observed in the computer. Data was collected and saved for five different delay settings, which can be seen in figure \ref{fig:TimeCal1}.
 		\begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{TimeCalibration1.png}
 \caption[TimeCalibration1]{Time calibration measurement where each line corresponds to a known delay time}
 \label{fig:TimeCal1}
 	\end{figure}
-	From this, we could deduce which channel corresponds to which magnitude of delay. The channel number and ther corresponding delay time were plotted and a linear fit through the data points could be performed (see figure \ref{fig:TimeCal2}), which yields the following rescaling function where $\hat{T}$ corresponds to the time-scale in [ns] and $\hat{C}$ to the channel-scale
+	From this, we could deduce which channel corresponds to which magnitude of delay. The channel number and their corresponding delay time were plotted and a linear fit through the data points could be performed (see figure \ref{fig:TimeCal2}), which yields the following rescaling function where $\hat{T}$ corresponds to the time-scale in [ns] and $\hat{C}$ to the channel-scale
 	\begin{equation}
 	\hat{T} = \hat{C} \cdot 0.0111ns + 5.2041ns 
 	\end{equation}
@@ -302,7 +302,7 @@ E_{CE} = E_{\gamma} \cdot \left(1 - \frac{1}{1+2 E_{\gamma}/m_ec^2} \right).
 \chapter{Experimental Results}
 For each angle in the range of $60^{\circ}$ to $180^{\circ}$ with steps of $15^{\circ}$ we took three 20 minute measurements: The number of coincident events measured with the software Maestro $r_m$, the number of coincident events measured by one of the scalers $r_s$, and the total number of events measured by the fixed detectors $r_{tot}$. The results of these measurements for each angle are listed in table \ref{tab:measurement}. 
 %
-\begin{table}[H]
+\begin{table}[H]\label{tab:measurement}
 \begin{center}
 \begin{tabular}{lllll}
 Angle $\theta$ [$^{\circ}$] & $r_{m}$ [Hz] & $r_{s}$ [Hz] & $r_{tot}$ [Hz]\\
@@ -317,37 +317,38 @@ Angle $\theta$ [$^{\circ}$] & $r_{m}$ [Hz] & $r_{s}$ [Hz] & $r_{tot}$ [Hz]\\
 165	& 3.57 & 4.35 & 1466\\
 180	& 3.67 & 4.31 & 1453\\ 
 \end{tabular}
+\caption{Measurement results}
 \label{tab:measurement}
 \end{center}
 \end{table}
 %
-The software Maestro gave us not only the number of coincident events as listed in the table above, but the number of events for a 8191 ADC channels. As an example, the histogram for $\theta = 90^{\circ}$ is shown in figure \ref{fig:histogramraw}, the rest can be found in the appendix.
+The software Maestro gave us not only the number of coincident events as listed in the table above, but the number of events for 8191 ADC channels. As an example, the histogram for $\theta = 90^{\circ}$ is shown in figure \ref{fig:histogramraw}, the rest can be found in the appendix.
 %
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.4]{90degraw.png}
+\includegraphics[scale=0.65]{90degraw.png}
 \caption[Histogram]{Histogram with ADC channels for $\theta = 90^{\circ}$}
-\label{fig:hist120}
+\label{fig:histogramraw}
 \end{figure}
 %
 
 
 
 \chapter{Data Analysis}
-Since each measurement lasted for 20 minutes, the statistical errors on these measurements should be negligible. To check this assumption we calculated the statistical uncertainty on the measurement made by scaler 1 (BIG NUMBERS). Since scaler 1 was counting the number of events registered by the fixed detector, we would expect it to measure the same value in each of the $n$ measuring periods. The relative statistical uncertainty can thus be calculated by
+Since each measurement lasted for 20 minutes, the statistical errors on these measurements should be negligible. To check this assumption, we calculated the statistical uncertainty on the measurement made by S1). Since S1 was counting the number of events registered by the fixed detector, we would expect it to measure the same value in each of the $n$ measuring periods. The relative statistical uncertainty can thus be calculated by
 %
 \begin{align}
-\frac{u_r}{\overline{r}} = \frac{1}{\overline{r}}\sqrt{\frac{\sum_i (r_i - \overline{r})^2}{n(n-1)}} \approx 0.1\%
+\frac{\Delta r}{\overline{r}} = \frac{1}{\overline{r}}\sqrt{\frac{\sum_i (r_i - \overline{r})^2}{n(n-1)}} \approx 0.1\%
 \end{align}
 %
 Assuming the same statistical uncertainty on the Maestro data $r_m$ which consists of values in a range of $5\%$ around their mean, this statistical uncertainty can indeed be neglected.
 
 
 
-We started by rescaling the x-axis from ADC channels to time. To make sure there are enough counts per bin we had to rebin the data. We merged 20 bins to one, giving us a time resolution of $0.22\,$ns. We then used the $\chi^2$-method to fit a Gaussian function on each histogram, taking into account an uncertainty on each bin of 
+We started by rescaling the x-axis from ADC channels to time (see section \ref{sec:TimeCal}). To make sure there are enough counts per bin we had to rebin the data. We merged 20 bins to one, giving us a time resolution of $0.22\,$ns. We then used the $\chi^2$-method to fit a Gaussian function on each histogram, taking into account an uncertainty on each bin of 
 %
 \begin{align}
-u_{bin} = \sqrt{n_{bin}}
+\Delta_{bin} = \sqrt{n_{bin}}
 \end{align}
 
 Figure \ref{fig:hist120} shows the histogram with Gaussian fit for the angle $\theta = 90^{\circ}$.
@@ -355,11 +356,11 @@ Figure \ref{fig:hist120} shows the histogram with Gaussian fit for the angle $\t
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.65]{90deg.png}
-\caption[Histogram]{Histogram with Gaussian Fit for angle $\theta = 90^{\circ}$}
+\caption[Histogram]{Histogram with gaussian fit for angle $\theta = 90^{\circ}$}
 \label{fig:hist120}
 \end{figure}
 %
-We noticed that the measured data does not show a single peak at the set delay time, but instead two peaks slightly below and above. WHY? In a next step, we subtracted the background from the data. In order to estimate the background, we took the average of the bins in a range of [$3\sigma$, $4\sigma$] on both sides of the mean $\mu$. Then we subtracted this average from each bin in the histogram. We then summed all the bins in the histogram to get the number of coincident events per second $r_c$ for each angle. Table \ref{tab:nevents} shows the result for each angle compared to the number of coincident events per second $r_{s}$ as measured by the scaler.
+We noticed that the measured data does not show a single peak at the set delay time, but instead two peaks slightly below and above. In a next step, we subtracted the background from the data. In order to estimate the background, we took the average of the bins in a range of [$3\sigma$, $4\sigma$] on both sides of the mean $\mu$. Then we subtracted this average from each bin in the histogram. We then summed all the bins in the histogram to get the number of coincident events per second $r_c$ for each angle. Table \ref{tab:nevents} shows the result for each angle compared to the number of coincident events per second $r_{s}$ as measured by the scaler.
 %
 \begin{table}[H]
 \begin{center}
@@ -381,16 +382,20 @@ Angle $\theta$ [$^{\circ}$] & $r_{c}$ [Hz] & $r_{s}$ [Hz]\\
 \end{center}
 \end{table}
 %
-To be able to compare this data to the predicted value, we normalized the data to $r_{c}(\theta=90^{\circ})$. Then we used the $\chi^2$-method to fit a function in the form of equation \ref{distribution} to the data points (figure \ref{fig:distribution}).
+In order to be able to compare this data to the predicted value, we normalized the data to $r_{c}(\theta=90^{\circ})$. Then we used the $\chi^2$-method to fit a function in the form of equation \ref{distribution} to the data points (figure \ref{fig:distribution}).
+\begin{equation}
+W(\theta) = a_0 + a_1 \cos^2(\theta) + a_2 \cos^4(\theta)
+\end{equation}
+This corresponds to formula \ref{eq:Ang1} with leaving $a_0$ as a free parameter instead of constraining it to exactly 1.
 %
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.65]{dist.png}
-\caption[Distribution]{Normalized Angular Distribution}
+\caption[Distribution]{Normalized angular distribution}
 \label{fig:distribution}
 \end{figure}
 %
-For the coefficients $a_i$ we got:
+For the coefficients $a_i$ we obtained:
 %
 \begin{align*}
 a_0 &= 1.003 \pm 0.008\\
@@ -398,7 +403,7 @@ a_1 &= 0.157 \pm 0.049\\
 a_2 &= -0.075 \pm 0.047\\
 \end{align*}
 %
-comparing this the literature values
+comparing this the literature values [\ref{source:Hamilton}]
 %
 \begin{align*}
 a_{0,lit} &= 1\\
@@ -408,6 +413,9 @@ a_{2,lit} &= 1/24 \approx 0.042\\
 %
 we see that $a_{0,lit}$ and $a_{1,lit}$ are within the range while $a_{2,lit}$ is not. From figure \ref{fig:distribution} it is also clearly visible that our measured data does not verify the prediction for angles starting at $\theta=135^{\circ}$. In the range of $\theta \in \left[60^{\circ},120^{\circ}\right]$ the measured data corresponds to the prediction.
 
+\chapter{Conclusion}
+
+The scaler S2 merely measures the amount of approximately coincident events from both detectors. Using the 'time-branch', more information is provided. Namely, the overlay of the TAC-signal and the gate-input from the delay trigger add more nuance by providing a quantitative delay between allegedly coincident events.
 
 \chapter{Appendix}
 
@@ -415,17 +423,17 @@ versprochener unskalierter Energieplot nicht vergessen
 
 \section{References}
 
-%[\ref{source:manual}]: Instruction manual and assistants \labeltext{1}{source:manual}
-%\\ 
-%[\ref{source:Hamilton}]: Donald R. Hamilton Phys. Rev. 58, 122 (1940) \labeltext{2}{source:Hamilton}
-%\\ 
-%[\ref{source:WilliamLeo}]: Dr. William R. Leo - Techniques for Nuclear and Particle Physics Experiments: A How-to Approach (1994)\labeltext{3}{source:WilliamLeo}
-%\\ 
-%[\ref{source:GlennKnoll}]: Glenn F. Knoll - Radiation Detection and Measurement (2010) \labeltext{4}{source:GlennKnoll}
+[\ref{source:manual}]: Instruction manual and assistants \labeltext{1}{source:manual}
+
+[\ref{source:Hamilton}]: Donald R. Hamilton Phys. Rev. 58, 122 (1940) \labeltext{2}{source:Hamilton}
+
+[\ref{source:WilliamLeo}]: Dr. William R. Leo - Techniques for Nuclear and Particle Physics Experiments: A How-to Approach (1994)\labeltext{3}{source:WilliamLeo}
+
+[\ref{source:GlennKnoll}]: Glenn F. Knoll - Radiation Detection and Measurement (2010) \labeltext{4}{source:GlennKnoll}
 
 
 
-
+%Donald R. Hamilton Phys. Rev. 58, 122 (1940)
 
 
 
