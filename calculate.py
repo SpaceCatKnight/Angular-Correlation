@@ -117,6 +117,20 @@ paramg = [0.1,50,10]        # Parameters for Gaussian Fit
 paramm = [1,0.1,0.01]       # Parameters for Model Fit
 
 
+"""
+# Plot Raw Histogram for angle k
+k = 8
+plt.bar(channelaxis[1:],val[k]/1200.,width=0.15)
+plt.title(r'$\theta =$ %i$^{\circ}$' %ang[k])
+plt.xlim(0,8200)
+plt.ylim(0,0.011)
+plt.xlabel('ADC Channels')
+plt.ylabel(r'Events per second')
+#plt.savefig('180degraw.png')
+plt.show()
+"""
+
+
 # Merge Bins, Subtract Background for all Angles
 binsize = 20
 x0,y0 = timeaxis,yraw
@@ -152,11 +166,14 @@ for i in range(3):
         popt,pcov = curve_fit(gaussian,x[k],y[k],p0=paramg)
         amp,mu,sigma = popt
         ax[i,j].plot(x[k],gaussian(x[k],*popt),'r')
-        ax[i,j].plot([mu]*2,[0,np.amax(y[k])],'g--')
-        for n in range(1,4,1):
-            ax[i,j].plot([mu-n*sigma]*2,[0,np.amax(y[k])],'y--')
-            ax[i,j].plot([mu+n*sigma]*2,[0,np.amax(y[k])],'y--')
-        ax[i,j].set_xlim(mu-4*sigma,mu+4*sigma)
+        #ax[i,j].plot([mu]*2,[0,np.amax(y[k])],'g--')
+        #for n in range(1,4,1):
+            #ax[i,j].plot([mu-n*sigma]*2,[0,np.amax(y[k])],'y--')
+            #ax[i,j].plot([mu+n*sigma]*2,[0,np.amax(y[k])],'y--')
+        ax[i,j].set_ylim(0,0.09)
+        #ax[i,j].set_xlim(mu-4*sigma,mu+4*sigma)
+        ax[i,j].set_xlabel('Time Delay in ns')
+        ax[i,j].set_ylabel(r'Events in s$^{-1}$')
         k += 1
 plt.show()
 """
@@ -164,7 +181,7 @@ plt.show()
 
 """
 # Plot Gaussian fit for angle k
-k = 8             # Which angle
+k = 4             # Which angle
 plt.title(r'$\theta =$ %i$^{\circ}$' %ang[k])
 plt.bar(x[k],y[k],label='data',width=0.4,color='k')
 popt,pcov = curve_fit(gaussian,x[k],y[k],p0=paramg)
@@ -176,14 +193,16 @@ plt.plot(x[k],gaussian(x[k],*popt),'r')
     #plt.plot([mu+n*sigma]*2,[0,np.amax(y[k])+0.02],'y')
 plt.xlabel('Time Delay in ns')
 plt.ylabel(r'Events in s$^{-1}$')
+plt.ylim(0,0.09)
 #plt.xlim(mu-4*sigma,mu+4*sigma)
-plt.savefig('plots/180deg.png',dpi=300)
-#plt.show()
+#plt.savefig('180deg.png',dpi=300)
+plt.show()
 """
+
 """
 #Alternative mit Errors:
 # Plot Gaussian fit for angle k
-k = 8             # Which angle
+k = 0             # Which angle
 plt.title(r'$\theta =$ %i$^{\circ}$' %ang[k])
 errors = list(map(lambda x : np.sqrt(np.abs(1200*x))/1200, y[k]))
 plt.bar(x[k],y[k],label='data',width=0.15,color='k',yerr=errors)
@@ -195,12 +214,12 @@ plt.plot(x[k],gaussian(x[k],*popt),'g')
     #plt.plot([mu-n*sigma]*2,[0,np.amax(y[k])+0.02],'y')
     #plt.plot([mu+n*sigma]*2,[0,np.amax(y[k])+0.02],'y')
 plt.xlabel('Time Delay in ns')
-plt.ylabel(r'Events in s$^{-1}$')
+plt.ylabel(r'Events per second')
 #plt.xlim(mu-4*sigma,mu+4*sigma)
-#plt.savefig('plots/180deg.png',dpi=300)
-plt.show()
+plt.ylim(0,0.1)
+plt.savefig('60deg.png',dpi=300)
+#plt.show()
 """
-
 
 
 """
@@ -215,10 +234,10 @@ nevents_cor.append(nevents[8])
 
 
 # Print Number of Events in Hertz, Background
-print(nevents)
+#print(nevents)
 #print(scaler)
 #print(bg)
-print(bgtot)
+#print(bgtot)
 #print((x[8][408]-x[8][0])/409)
 
 
@@ -257,6 +276,6 @@ plt.xlabel(r'$\theta$ in $^{\circ}$')
 plt.ylabel(r'$W(\theta)$')
 legend = plt.legend(loc='upper left')
 plt.show()
-#plt.savefig('plots/dist.png',dpi=300)
+#plt.savefig('dist.png',dpi=300)
 """
 
