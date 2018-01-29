@@ -202,7 +202,7 @@ The 'time branch' starts at each detector with a timing filter amplifier (TFA) w
 
  The 'energy branch' starts at each detector with an amplifier containing a pulse height analyzer (PHA). The signal produced by the detectors represents a broad energy spectrum (see section \ref{sec:EnergySpectrum}). Since only the $\gamma$-decays are of interest, the window of the PHA is set such that only the TTL pulses corresponding to the $\gamma$-ray emission are passed to the level adapter (LA), where they are converted into NIM signals. After the conversion, they pass a fan-out module where the signal of the $D_l$ is split into two identical pulses and one of them enters a scaler S1 that counts the rate of events. This data is used for a cross-check of the measurement. The signals of the two detectors merge into an AND-gate inside a coincidence module. This module returns a pulse only if there is a signal coming from both detectors at the same time. The output signal is then forwarded into another scaler S2, which is also used for cross-checking, and into a delay-trigger that generates a rectangular TTL signal with adjustable delay and width. This signal is used as the gate input for the MCA.
 
-The computer connected to the MCA records the number of events contained in a histogram where the bins correspond to the delay between the detector signals. This measurement is performed while placing the small detector at different angles $\theta$ relative to the large one, covering a $\theta$-range from 180$^\circ$ to 60$^\circ$ with decrements of 15$^\circ$. Each measurement will last for 20 min. In order to be able to assign an actual time delay to each bin in the histogram, a calibration measurement is carried out where the output of the TAC is observed for different known delays. 
+The computer connected to the MCA records the number of events contained in a histogram where the bins correspond to the delay between the detector signals. This measurement is performed while placing the small detector at different angles $\theta$ relative to the large one, covering a $\theta$-range from 180$^\circ$ to 60$^\circ$ with decrements of 15$^\circ$. Each measurement will last for 20 min. In order to be able to assign an actual time delay to each bin in the histogram, a calibration measurement is carried out where the output of the TAC is observed for different known delays (see section \ref{sec:TimeCal}). 
 
 
 \section{Electronic Modules} \label{sec:modules}
@@ -261,7 +261,7 @@ The concept of a photomultiplier tube is illustrated in figure \ref{fig:Photomul
 
 \chapter{Energy Spectrum} \label{sec:EnergySpectrum}
 
-		Figure \ref{fig:EnergySpectra} shows the energy spectra measured at the two detectors correspondingly where the horizontal axis has been rescaled. The original scale can be found in figure \ref{fig:EnergySpectraUnscaled} in the appendix, where the number of events was merely a function of ADC-channels. The two sharp peaks in the right half of the plot could be easily identified as the typical $\gamma$-decay absorption lines. Their corresponding energy values of $E_{\gamma,1}$ = 1172 keV and $E_{\gamma}$ = 1332 keV are well known in the literature and were used for the energy calibration that made the rescaling to energy units possible.	
+		Figure \ref{fig:EnergySpectra} shows the energy spectra measured at the two detectors correspondingly where the horizontal axis has been rescaled. The original scale can be found in figure \ref{fig:EnergyRaw} in the appendix, where the number of events was merely a function of ADC-channels. The two sharp peaks in the right half of the plot could be easily identified as the typical $\gamma$-decay absorption lines. Their corresponding energy values of $E_{\gamma,1}$ = 1172 keV and $E_{\gamma}$ = 1332 keV are well known in the literature and were used for the energy calibration that made the rescaling to energy units possible.	
 		\begin{figure}[H]
 \centering
 \includegraphics[scale=0.3]{EnergySpectra.png}
@@ -275,29 +275,6 @@ E_{CE} = E_{\gamma} \cdot \left(1 - \frac{1}{1+2 E_{\gamma}/m_ec^2} \right).
 		This yields a value of $E_{CE,1}$ = 963 keV for the first $\gamma$-ray and $E_{CE,2}$ = 1118 keV for the second $\gamma$-ray. The first Compton edge is clearly visible in the plots while the second one coincides with the finite width of the first $\gamma$-ray line. Thus, it is clear that the Compton continuum does not vanish completely after the first edge.
 
 		There is also an additional peak visible in both plots at around 200 keV in the case of the small detector and 150 keV for the large one. This is a very common effect that can be traced back to backscattering which originates from $\gamma$-rays that have Compton scattered in the material surrounding the detector material before being detected. In the literature, this peak is said to be expected at around 200 keV, which is in very good agreement with the measurement. It also makes sense that this peak is not the same for both detectors, since they are not identical models.
-
-
-\chapter{Calibration}
-
-\section{Time Calibration} \label{sec:TimeCal}
-
-		Equivalently to the energy calibration in section [\ref{sec:EnergySpectrum}], the MCA transmitted the number of events as a function of the corresponding channel to the computer. In order to convert the channel number to the corresponding physical time delay, a time calibration measurement has been performed. This consisted of splitting the signal of one of the detectors and then connecting one copy directly to the start-channel of the TAC and the other one to the stop-channel after passing the delay module first. The signal that the TAC induces for various delay settings in the MCA could then be directly observed in the computer. Data was collected and saved for five different delay settings, which can be seen in figure \ref{fig:TimeCal1}.
-		\begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{TimeCalibration1.png}
-\caption[TimeCalibration1]{Time calibration measurement where each line corresponds to a known delay time}
-\label{fig:TimeCal1}
-	\end{figure}
-	From this, we could deduce which channel corresponds to which magnitude of delay. The channel number and their corresponding delay time were plotted and a linear fit through the data points could be performed (see figure \ref{fig:TimeCal2}), which yields the following rescaling function where $\hat{T}$ corresponds to the time-scale in [ns] and $\hat{C}$ to the channel-scale
-	\begin{equation}
-	\hat{T} = \hat{C} \cdot 0.0111ns + 5.2041ns 
-	\end{equation}
-	\begin{figure}[H]
-\centering
-\includegraphics[scale=0.39]{TimeCalibration2.png}
-\caption[TimeCalibration2]{Linear fit through the corresponding delay-channel-points}
-\label{fig:TimeCal2}
-	\end{figure}
 
 \chapter{Experimental Results}
 For each angle in the range of $60^{\circ}$ to $180^{\circ}$ with steps of $15^{\circ}$ we took three 20 minute measurements: The number of coincident events measured with the software Maestro $r_m$, the number of coincident events measured by one of the scalers $r_s$, and the total number of events measured by the fixed detectors $r_{tot}$. The results of these measurements for each angle are listed in table \ref{tab:measurement}. 
@@ -335,6 +312,29 @@ The software Maestro gave us not only the number of coincident events as listed 
 
 
 \chapter{Data Analysis}
+
+\section{Time Calibration} \label{sec:TimeCal}
+
+		Equivalently to the energy calibration in section [\ref{sec:EnergySpectrum}], the MCA transmitted the number of events as a function of the corresponding channel to the computer. In order to convert the channel number to the corresponding physical time delay, a time calibration measurement has been performed. This consisted of splitting the signal of one of the detectors and then connecting one copy directly to the start-channel of the TAC and the other one to the stop-channel after passing the delay module first. The signal that the TAC induces for various delay settings in the MCA could then be directly observed in the computer. Data was collected and saved for five different delay settings, which can be seen in figure \ref{fig:TimeCal1}.
+		\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{TimeCalibration1.png}
+\caption[TimeCalibration1]{Time calibration measurement where each line corresponds to a known delay time}
+\label{fig:TimeCal1}
+	\end{figure}
+	From this, we could deduce which channel corresponds to which magnitude of delay. The channel number and their corresponding delay time were plotted and a linear fit through the data points could be performed (see figure \ref{fig:TimeCal2}), which yields the following rescaling function where $\hat{T}$ corresponds to the time-scale in [ns] and $\hat{C}$ to the channel-scale
+	\begin{equation}
+	\hat{T} = \hat{C} \cdot 0.0111 \mathrm{ns} + 5.2041 \mathrm{ns} 
+	\end{equation}
+	\begin{figure}[H]
+\centering
+\includegraphics[scale=0.39]{TimeCalibration2.png}
+\caption[TimeCalibration2]{Linear fit through the corresponding delay-channel-points}
+\label{fig:TimeCal2}
+	\end{figure}
+
+\section{Angular Correlation}
+
 Since each measurement lasted for 20 minutes, the statistical errors on these measurements should be negligible. To check this assumption, we calculated the statistical uncertainty on the measurement made by S1). Since S1 was counting the number of events registered by the fixed detector, we would expect it to measure the same value in each of the $n$ measuring periods. The relative statistical uncertainty can thus be calculated by
 %
 \begin{align}
@@ -419,7 +419,14 @@ The scaler S2 merely measures the amount of approximately coincident events from
 
 \chapter{Appendix}
 
-versprochener unskalierter Energieplot nicht vergessen
+\section{Energy Spectrum}
+%
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.35]{EnergyRaw.png}
+\caption[EnergyRaw]{Energy spectrum measured as a function of ADC channels}
+\label{fig:EnergyRaw}
+\end{figure}
 
 \section{Experimental Results}\label{app:histogramraw}
 %
