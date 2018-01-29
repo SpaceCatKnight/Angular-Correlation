@@ -276,7 +276,7 @@ E_{CE} = E_{\gamma} \cdot \left(1 - \frac{1}{1+2 E_{\gamma}/m_ec^2} \right).
 
 		There is also an additional peak visible in both plots at around 200 keV in the case of the small detector and 150 keV for the large one. This is a very common effect that can be traced back to backscattering which originates from $\gamma$-rays that have Compton scattered in the material surrounding the detector material before being detected. In the literature, this peak is said to be expected at around 200 keV, which is in very good agreement with the measurement. It also makes sense that this peak is not the same for both detectors, since they are not identical models.
 
-\chapter{Experimental Results}
+\chapter{Measurement Log}
 For each angle in the range of $60^{\circ}$ to $180^{\circ}$ with steps of $15^{\circ}$ we took three 20 minute measurements: The number of coincident events measured with the software Maestro $r_m$, the number of coincident events measured by one of the scalers $r_s$, and the total number of events measured by the fixed detectors $r_{tot}$. The results of these measurements for each angle are listed in table \ref{tab:measurement}. 
 %
 \begin{table}[H]\label{tab:measurement}
@@ -333,18 +333,17 @@ The software Maestro gave us not only the number of coincident events as listed 
 \label{fig:TimeCal2}
 	\end{figure}
 
-\section{Angular Correlation}
+\section{Gaussian Fit}
 
-Since each measurement lasted for 20 minutes, the statistical errors on these measurements should be negligible. To check this assumption, we calculated the statistical uncertainty on the measurement made by S1). Since S1 was counting the number of events registered by the fixed detector, we would expect it to measure the same value in each of the $n$ measuring periods. The relative statistical uncertainty can thus be calculated by
+%Since each measurement lasted for 20 minutes, the statistical errors on these measurements should be negligible. To check this assumption, we calculated the statistical uncertainty on the measurement made by S1). Since S1 was counting the number of events registered by the fixed detector, we would expect it to measure the same value in each of the $n$ measuring periods. The relative statistical uncertainty can thus be calculated by
+%%
+%\begin{align}
+%\frac{\Delta r}{\overline{r}} = \frac{1}{\overline{r}}\sqrt{\frac{\sum_i (r_i - \overline{r})^2}{n(n-1)}} \approx 0.1\%
+%\end{align}
+%%
+%Assuming the same statistical uncertainty on the Maestro data $r_m$ which consists of values in a range of $5\%$ around their mean, this statistical uncertainty can indeed be neglected.
 %
-\begin{align}
-\frac{\Delta r}{\overline{r}} = \frac{1}{\overline{r}}\sqrt{\frac{\sum_i (r_i - \overline{r})^2}{n(n-1)}} \approx 0.1\%
-\end{align}
 %
-Assuming the same statistical uncertainty on the Maestro data $r_m$ which consists of values in a range of $5\%$ around their mean, this statistical uncertainty can indeed be neglected.
-
-
-
 We started by rescaling the x-axis from ADC channels to time (see section \ref{sec:TimeCal}). To make sure there are enough counts per bin we had to rebin the data. We merged 20 bins to one, giving us a time resolution of $0.22\,$ns. We then used the $\chi^2$-method to fit a Gaussian function on each histogram, taking into account an uncertainty on each bin of 
 %
 \begin{align}
@@ -360,7 +359,7 @@ Figure \ref{fig:hist120} shows the histogram with gaussian fit for the angle $\t
 \label{fig:hist120}
 \end{figure}
 %
-We noticed that the measured data does not show a single peak at the set delay time, but instead two peaks slightly below and above. In a next step, we subtracted the background from the data. In order to estimate the background, we took the average of the bins in a range of [$3\sigma$, $4\sigma$] on both sides of the mean $\mu$. Then we subtracted this average from each bin in the histogram. We then summed all the bins in the histogram to get the number of coincident events per second $r_c$ for each angle. Table \ref{tab:nevents} shows the result for each angle compared to the number of coincident events per second $r_{s}$ as measured by the scaler.
+We noticed that the measured data does not show a single peak at the set delay time, but instead two peaks slightly below and above. A reason for this might be the poor stability of the trigger settings in the discriminator. In a next step, we subtracted the background from the data. In order to estimate the background, we took the average of the bins in a range of [$3\sigma$, $4\sigma$] on both sides of the mean $\mu$. Then we subtracted this average from each bin in the histogram. We then summed all the bins in the histogram to get the number of coincident events per second $r_c$ for each angle. Table \ref{tab:nevents} shows the result for each angle compared to the number of coincident events per second $r_{s}$ as measured by the scaler.
 %
 \begin{table}[H]
 \begin{center}
@@ -382,6 +381,9 @@ Angle $\theta$ [$^{\circ}$] & $r_{c}$ [Hz] & $r_{s}$ [Hz]\\
 \end{center}
 \end{table}
 %
+
+\section{Angular Correlation Function}
+
 In order to be able to compare this data to the predicted value, we normalized the data to $r_{c}(\theta=90^{\circ})$. Then we used the $\chi^2$-method to fit a function in the form of equation \ref{distribution} to the data points (figure \ref{fig:distribution}).
 \begin{equation}
 W(\theta) = a_0 + a_1 \cos^2 \theta + a_2 \cos^4 \theta
@@ -415,7 +417,15 @@ we see that $a_{0,lit}$ and $a_{1,lit}$ are within the range while $a_{2,lit}$ i
 
 \chapter{Conclusion}
 
-The scaler S2 merely measures the amount of approximately coincident events from both detectors. Using the 'time-branch', more information is provided. Namely, the overlay of the TAC-signal and the gate-input from the delay trigger add more nuance by providing a quantitative delay between allegedly coincident events.
+The scaler S2 merely measures the amount of approximately coincident events from both detectors. Using the 'time-branch', more information is provided. Namely, the overlay of the TAC-signal and the gate-input from the delay trigger add more nuance by providing a quantitative delay between allegedly coincident events. As expected, the number of events counted by S2 was significantly higher at every angel. Nevertheless, it supplied a cross-check in the sense that the sclaer values behave the same way as the ones obtained by the TAC-signal. This similarity verifies that the electronic modules act as expected.
+
+A significant source of uncertainty might come from the poor stability of the trigger settings in the discriminator that let to the splitting of the expected gaussian distribution into two discrete peaks. In order to avoid such error, one would have to be more careful when adjusting the trigger in the future. Another way to deal with this problem would have been using a NIM signal again for the input of the discriminator.
+
+In general, the measurement lacked a good degree of stability. A test run yielded that even slightly touching the cables could have an effect on the measurement. Not to mention the effect that the presence of the students and assistants might have had on the outcome. Thus we conclude that a more isolated setting could further improve the measurement.
+
+A closer at the vertical axes in figure \ref{fig:EnergySpectra} yields that the larger detector detector around twice as many events as the smaller one, despite the adjustments in behalf of solid angle coverage. For a better measurement, it might be wise to use identical detector models at equal distances.
+
+
 
 \chapter{Appendix}
 
