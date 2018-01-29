@@ -201,25 +201,25 @@ plt.show()
 
 
 #Alternative mit Errors:
-# Plot Gaussian fit for angle k
-k = 0             # Which angle
-plt.title(r'$\theta\,=$ %i$^{\circ}$' %ang[k])
-errors = list(map(lambda x : np.sqrt(np.abs(1200*x))/1200, y[k]))
-plt.bar(x[k],y[k],label='Data',width=0.15,color='k',yerr=errors)
-popt,pcov = curve_fit(gaussian,x[k],y[k],p0=paramg,sigma=errors)
-amp,mu,sigma = popt
-plt.plot(x[k],gaussian(x[k],*popt),'r',label='Gaussian fit')
-#plt.plot([mu]*2,[0,np.amax(y[k])+0.02],'g')
-#for n in range(1,5,1):
-    #plt.plot([mu-n*sigma]*2,[0,np.amax(y[k])+0.02],'y')
-    #plt.plot([mu+n*sigma]*2,[0,np.amax(y[k])+0.02],'y')
-plt.xlabel('Time delay [ns]')
-plt.ylabel(r'Events per time [Hz]')
-#plt.xlim(mu-4*sigma,mu+4*sigma)
-plt.ylim(0,0.1)
-plt.legend()
-plt.savefig('60deg.png',dpi=300)
-#plt.show()
+# Plot Gaussian fit for all angles
+for k in range(9):
+    plt.title(r'$\theta\,=$ %i$^{\circ}$' %ang[k])
+    errors = list(map(lambda x : np.sqrt(np.abs(1200*x))/1200, y[k]))
+    plt.bar(x[k],y[k],label='Data',width=0.15,color='k',yerr=errors)
+    popt,pcov = curve_fit(gaussian,x[k],y[k],p0=paramg,sigma=errors)
+    amp,mu,sigma = popt
+    plt.plot(x[k],gaussian(x[k],*popt),'r',label='Gaussian fit')
+    #plt.plot([mu]*2,[0,np.amax(y[k])+0.02],'g')
+    #for n in range(1,5,1):
+        #plt.plot([mu-n*sigma]*2,[0,np.amax(y[k])+0.02],'y')
+        #plt.plot([mu+n*sigma]*2,[0,np.amax(y[k])+0.02],'y')
+        plt.xlabel('Time delay [ns]')
+        plt.ylabel(r'Events per time [Hz]')
+        #plt.xlim(mu-4*sigma,mu+4*sigma)
+        plt.ylim(0,0.1)
+        plt.legend()
+        #plt.savefig(str(ang[k])+'deg.png',dpi=300)
+        #plt.show()
 
 
 
@@ -234,7 +234,7 @@ ang_cor.append(ang[8])
 nevents_cor.append(nevents[8])
 """
 
-
+'''
 # Print Number of Events in Hertz, Background
 #print(nevents)
 #print(scaler)
@@ -279,5 +279,5 @@ plt.ylabel(r'$W(\theta)$')
 legend = plt.legend(loc='upper left')
 plt.show()
 #plt.savefig('dist.png',dpi=300)
-
+'''
 
