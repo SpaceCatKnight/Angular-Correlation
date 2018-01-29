@@ -359,22 +359,22 @@ Figure \ref{fig:hist120} shows the histogram with gaussian fit for the angle $\t
 \label{fig:hist120}
 \end{figure}
 %
-We noticed that the measured data does not show a single peak at the set delay time, but instead two peaks slightly below and above. A reason for this might be the poor stability of the trigger settings in the discriminator. In a next step, we subtracted the background from the data. In order to estimate the background, we took the average of the bins in a range of [$3\sigma$, $4\sigma$] on both sides of the mean $\mu$. Then we subtracted this average from each bin in the histogram. We then summed all the bins in the histogram to get the number of coincident events per second $r_c$ for each angle. Table \ref{tab:nevents} shows the result for each angle compared to the number of coincident events per second $r_{s}$ as measured by the scaler.
+We noticed that the measured data does not show a single peak at the set delay time, but instead two peaks slightly below and above. A reason for this might be the poor stability of the trigger settings in the discriminator. In a next step, we subtracted the background from the data. In order to estimate the background, we took the average of the bins in a range of [$3\sigma$, $4\sigma$] on both sides of the mean $\mu$. Then we subtracted this average from each bin in the histogram. We then summed all the bins in a range of [$\mu$-3$\sigma$, $\mu$+3$\sigma$] in the histogram to get the number of coincident events per second $r_c$ for each angle. The statistical uncertainty was estimated by taking the square-root of the number of counts and normalizing it accordingly. Table \ref{tab:nevents} shows the result for each angle compared to the number of coincident events per second $r_{s}$ as measured by the scaler.
 %
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{llll}
 Angle $\theta$ [$^{\circ}$] & $r_{c}$ [Hz] & $r_{s}$ [Hz]\\
 \hline
-60 	& 3.39 & 4.34\\
-  75 	& 3.22 & 4.09\\
-  90 	& 3.25 & 4.12\\
-105 	& 3.33 & 4.16\\
-120	& 3.37 & 4.20\\
-135	& 3.44 & 4.29\\
-150	& 3.48 & 4.35\\
-165	& 3.49 & 4.35\\
-180	& 3.54 & 4.31\\ 
+60 	& 3.42 $\pm$ 0.05 & 4.34\\
+  75 	& 3.24 $\pm$ 0.05 & 4.09\\
+  90 	& 3.23 $\pm$ 0.05 & 4.12\\
+105 	& 3.30 $\pm$ 0.05 & 4.16\\
+120	& 3.36 $\pm$ 0.05 & 4.20\\
+135	& 3.42 $\pm$ 0.05 & 4.29\\
+150	& 3.50 $\pm$ 0.05 & 4.35\\
+165	& 3.47 $\pm$ 0.05 & 4.35\\
+180	& 3.54 $\pm$ 0.05 & 4.31\\ 
 \end{tabular}
 \caption{Rate for each angle}
 \label{tab:nevents}
@@ -382,10 +382,10 @@ Angle $\theta$ [$^{\circ}$] & $r_{c}$ [Hz] & $r_{s}$ [Hz]\\
 \end{table}
 %
 
-\section{Angular Correlation Function}
+\section{Angular Correlation Function} \label{sec:DataAnalysis}
 
-In order to be able to compare this data to the predicted value, we normalized the data to $r_{c}(\theta=90^{\circ})$. Then we used the $\chi^2$-method to fit a function in the form of equation \ref{distribution} to the data points (figure \ref{fig:distribution}).
-\begin{equation}
+In order to be able to compare this data to the predicted value, we normalized the data to $r_{c}(\theta=90^{\circ})$. Then we used the $\chi^2$-method to fit a function in the form of equation \ref{eq:distribution} to the data points (figure \ref{fig:distribution}).
+\begin{equation} \label{eq:distribution}
 W(\theta) = a_0 + a_1 \cos^2 \theta + a_2 \cos^4 \theta
 \end{equation}
 This corresponds to formula \ref{eq:Ang1} with leaving $a_0$ as a free parameter instead of constraining it to exactly 1.
@@ -400,12 +400,24 @@ This corresponds to formula \ref{eq:Ang1} with leaving $a_0$ as a free parameter
 For the coefficients $a_i$ we obtained:
 %
 \begin{align*}
-a_0 &= 1.003 \pm 0.008\\
-a_1 &= 0.157 \pm 0.049\\
-a_2 &= -0.075 \pm 0.047\\
+a_0 &= 1.003 \pm 0.007\\
+a_1 &= 0.175 \pm 0.044\\
+a_2 &= -0.091 \pm 0.043\\
 \end{align*}
 %
-comparing this the literature values [\ref{source:Hamilton}]
+
+\chapter{Conclusion}
+\section{Results}
+
+Comparing the results
+%
+\begin{align*}
+a_0 &= 1.003 \pm 0.007\\
+a_1 &= 0.175 \pm 0.044\\
+a_2 &= -0.091 \pm 0.043\\
+\end{align*}
+%
+derived in section \ref{sec:DataAnalysis} to the literature values [\ref{source:Hamilton}]
 %
 \begin{align*}
 a_{0,lit} &= 1\\
@@ -413,17 +425,17 @@ a_{1,lit} &= 1/8 = 0.125\\
 a_{2,lit} &= 1/24 \approx 0.042\\
 \end{align*}
 %
-we see that $a_{0,lit}$ and $a_{1,lit}$ are within the range while $a_{2,lit}$ is not. From figure \ref{fig:distribution} it is also clearly visible that our measured data does not verify the prediction for angles starting at $\theta=135^{\circ}$. In the range of $\theta \in \left[60^{\circ},120^{\circ}\right]$ the measured data corresponds to the prediction.
+we see that $a_{0,lit}$ is clearly within the range while $a_{1,lit}$ is sligthly out of range. $a_{2,lit}$, on the other hand, is notably out of range. From figure \ref{fig:distribution} it is clearly visible that our measured data does not verify the prediction for angles starting at $\theta=135^{\circ}$. In the range of $\theta \in \left[60^{\circ},120^{\circ}\right]$ the measured data corresponds to the prediction.
 
-\chapter{Conclusion}
+\section{Discussion of Error Sources}
+
+A closer look at the vertical axes in figure \ref{fig:EnergySpectra} yields that the larger detector detector around twice as many events as the smaller one, despite the adjustments in behalf of solid angle coverage. For a better measurement, it might be wise to use identical detector models at equal distances.
 
 The scaler S2 merely measures the amount of approximately coincident events from both detectors. Using the 'time-branch', more information is provided. Namely, the overlay of the TAC-signal and the gate-input from the delay trigger add more nuance by providing a quantitative delay between allegedly coincident events. As expected, the number of events counted by S2 was significantly higher at every angel. Nevertheless, it supplied a cross-check in the sense that the sclaer values behave the same way as the ones obtained by the TAC-signal. This similarity verifies that the electronic modules act as expected.
 
 A significant source of uncertainty might come from the poor stability of the trigger settings in the discriminator that let to the splitting of the expected gaussian distribution into two discrete peaks. In order to avoid such error, one would have to be more careful when adjusting the trigger in the future. Another way to deal with this problem would have been using a NIM signal again for the input of the discriminator.
 
 In general, the measurement lacked a good degree of stability. A test run yielded that even slightly touching the cables could have an effect on the measurement. Not to mention the effect that the presence of the students and assistants might have had on the outcome. Thus we conclude that a more isolated setting could further improve the measurement.
-
-A closer at the vertical axes in figure \ref{fig:EnergySpectra} yields that the larger detector detector around twice as many events as the smaller one, despite the adjustments in behalf of solid angle coverage. For a better measurement, it might be wise to use identical detector models at equal distances.
 
 
 
@@ -438,7 +450,7 @@ A closer at the vertical axes in figure \ref{fig:EnergySpectra} yields that the 
 \label{fig:EnergyRaw}
 \end{figure}
 
-\section{Experimental Results}\label{app:histogramraw}
+\section{Measurement Log}\label{app:histogramraw}
 %
 \begin{figure}[H]
 \centering
