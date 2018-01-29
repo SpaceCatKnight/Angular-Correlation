@@ -145,106 +145,45 @@ for k in range(9):
     bgtot.append(bgbuf*len(y1))     # Total Background Events
 
 
-# Make list with number of events for all angles
-nevents = []        # List of Events per second for all angles
-for i in y:
-    evbuf = 0
-    for j in i:
-        evbuf += j
-    nevents.append(evbuf)
 
-
-
-"""
-# Plot Gaussian Fit for all angles
-fig, ax = plt.subplots(3,3,sharex=True,sharey=False)
-k = 0
-for i in range(3):
-    for j in range(3):
-        ax[i,j].set_title(r'$\theta =$ %i$^{\circ}$' %ang[k])
-        ax[i,j].bar(x[k],y[k],label='data',width=0.15)
-        popt,pcov = curve_fit(gaussian,x[k],y[k],p0=paramg)
-        amp,mu,sigma = popt
-        ax[i,j].plot(x[k],gaussian(x[k],*popt),'r')
-        #ax[i,j].plot([mu]*2,[0,np.amax(y[k])],'g--')
-        #for n in range(1,4,1):
-            #ax[i,j].plot([mu-n*sigma]*2,[0,np.amax(y[k])],'y--')
-            #ax[i,j].plot([mu+n*sigma]*2,[0,np.amax(y[k])],'y--')
-        ax[i,j].set_ylim(0,0.09)
-        #ax[i,j].set_xlim(mu-4*sigma,mu+4*sigma)
-        ax[i,j].set_xlabel('Time Delay in ns')
-        ax[i,j].set_ylabel(r'Events in s$^{-1}$')
-        k += 1
-plt.show()
-"""
-
-
-"""
-# Plot Gaussian fit for angle k
-k = 4             # Which angle
-plt.title(r'$\theta\,=$ %i$^{\circ}$' %ang[k])
-plt.bar(x[k],y[k],label='data',width=0.4,color='k')
-popt,pcov = curve_fit(gaussian,x[k],y[k],p0=paramg)
-amp,mu,sigma = popt
-plt.plot(x[k],gaussian(x[k],*popt),'r')
-#plt.plot([mu]*2,[0,np.amax(y[k])+0.02],'g')
-#for n in range(1,5,1):
-    #plt.plot([mu-n*sigma]*2,[0,np.amax(y[k])+0.02],'y')
-    #plt.plot([mu+n*sigma]*2,[0,np.amax(y[k])+0.02],'y')
-plt.xlabel('Time delay [ns]')
-plt.ylabel(r'Events per time [Hz]')
-plt.ylim(0,0.09)
-#plt.xlim(mu-4*sigma,mu+4*sigma)
-#plt.savefig('180deg.png',dpi=300)
-plt.show()
-"""
-
-
-#Alternative mit Errors:
-# Plot Gaussian fit for all angles
+# Make Gaussian fit for all angles, empty all bins outside 3sigma, plot histograms 
+nevents = [0,0,0,0,0,0,0,0,0]
+uncerts = [0,0,0,0,0,0,0,0,0]
 for k in range(9):
-    plt.title(r'$\theta\,=$ %i$^{\circ}$' %ang[k])
+    #plt.title(r'$\theta\,=$ %i$^{\circ}$' %ang[k])
     errors = list(map(lambda x : np.sqrt(np.abs(1200*x))/1200, y[k]))
-    plt.bar(x[k],y[k],label='Data',width=0.15,color='k',yerr=errors)
+    #plt.bar(x[k],y[k],label='Data',width=0.15,color='k',yerr=errors)
     popt,pcov = curve_fit(gaussian,x[k],y[k],p0=paramg,sigma=errors)
     amp,mu,sigma = popt
-    plt.plot(x[k],gaussian(x[k],*popt),'r',label='Gaussian fit')
+    i0,i1,i2 = index(x[k],mu),index(x[k],mu-3*np.abs(sigma)),index(x[k],mu+3*np.abs(sigma))
+    for j in y[k][i1:i2]:
+        nevents[k] += j
+    uncerts[k] = np.sqrt(np.abs(nevents[k]))/np.sqrt(1200)
+    #plt.plot(x[k],gaussian(x[k],*popt),'r',label='Gaussian fit')
     #plt.plot([mu]*2,[0,np.amax(y[k])+0.02],'g')
     #for n in range(1,5,1):
         #plt.plot([mu-n*sigma]*2,[0,np.amax(y[k])+0.02],'y')
         #plt.plot([mu+n*sigma]*2,[0,np.amax(y[k])+0.02],'y')
-        plt.xlabel('Time delay [ns]')
-        plt.ylabel(r'Events per time [Hz]')
-        #plt.xlim(mu-4*sigma,mu+4*sigma)
-        plt.ylim(0,0.1)
-        plt.legend()
-        #plt.savefig(str(ang[k])+'deg.png',dpi=300)
-        #plt.show()
+    #plt.xlabel('Time delay [ns]')
+    #plt.ylabel(r'Events per time [Hz]')
+    #plt.xlim(mu-4*sigma,mu+4*sigma)
+    #plt.ylim(0,0.1)
+    #plt.legend()
+    #plt.savefig(str(ang[k])+'deg.png',dpi=300)
+    #plt.show()
 
 
 
-
-"""
-# Delete value for theta=165deg for in ang and nevents
-ang_cor, nevents_cor = [],[]
-for i in range(7):
-    ang_cor.append(ang[i])
-    nevents_cor.append(nevents[i])
-ang_cor.append(ang[8])
-nevents_cor.append(nevents[8])
-"""
-
-'''
 # Print Number of Events in Hertz, Background
-#print(nevents)
-#print(scaler)
-#print(bg)
-#print(bgtot)
-#print((x[8][408]-x[8][0])/409)
+print(nevents)
+print(scaler)
+print(bgtot)
+
 
 
 # Normalise events per second (set ev/sec for 90deg to 1)
 ratenorm = nevents/nevents[2]
+uncertnorm = uncerts/nevents[2]
 bgnorm = bgtot/nevents[2]
 scalernorm = scaler/nevents[2]
 #print(bgnorm)
@@ -252,7 +191,7 @@ scalernorm = scaler/nevents[2]
 
 
 # Fit Data Points to Model Curve
-popt,pcov = curve_fit(model,ang,ratenorm,p0=paramm)
+popt,pcov = curve_fit(model,ang,ratenorm,sigma=uncertnorm,p0=paramm)
 a0,a1,a2 = popt
 perr = np.sqrt(np.diag(pcov))
 print('a0 = %.3f +/- %.3f' %(popt[0],perr[0]))
@@ -266,18 +205,18 @@ curve = model(np.arange(55,186,1),*popt)
 curvemin = model(np.arange(55,186,1),*(popt-perr))
 curvemax = model(np.arange(55,186,1),*(popt+perr))
 theo = model(np.arange(55,186,1),1.,1/8.,1/24.)
-plt.plot(ang,ratenorm,'go',label='Measurement')
+plt.errorbar(ang,ratenorm,yerr=uncertnorm,fmt='go',label='Data')
 #plt.plot(ang,scalernorm,'ko',label='Scaler')
 plt.plot(np.arange(55,186,1),curve,'b',label='Fit')
 #plt.plot(np.arange(55,186,1),curvemin,'c--',label='Min')
 #plt.plot(np.arange(55,186,1),curvemax,'c--',label='Max')
 plt.plot(np.arange(55,186),theo,'r',label='Prediction')
 plt.xlim(55,185)
-plt.title('Normalized Angular Distribution')
-plt.xlabel(r'$\theta$ in $^{\circ}$')
+plt.title('Normalized Angular Correlation Function')
+plt.xlabel(r'$\theta$ [$^{\circ}$]')
 plt.ylabel(r'$W(\theta)$')
 legend = plt.legend(loc='upper left')
-plt.show()
-#plt.savefig('dist.png',dpi=300)
-'''
+#plt.show()
+plt.savefig('dist.png',dpi=300)
+
 
