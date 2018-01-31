@@ -1,0 +1,65 @@
+Rebinning: 20 Bins merged to 1
+
+Raw Data:
+Angle		Events(PC)	Events(S2)	Events(S1)
+60		4244		5203		1763689
+75		4025		4912		1763159
+90		3994		4947		1763096	
+105		4069		4986		1761493
+120		4130		5034		1756916
+135		4221		5152		1756281
+150		4316		5219		1761526
+165		4286		5223		1759589
+180		4405		5167		1743748
+
+
+Rebinned, Background subtracted, etc. data
+Angle		Rate(PC)	Rate(Scaler)	Background
+60		3.42+/-0.05	4.34+/-0.06	0.15	
+75		3.24...		4.09...		0.13
+90		3.23		4.12		0.08
+105		3.30	 	4.16		0.06
+120		3.36		4.20		0.08
+135		3.42		4.29		0.08
+150		3.50		4.35		0.11
+165		3.47		4.35		0.11
+180		3.54		4.31		0.13
+
+
+a0 = 1.003 +/- 0.007
+a1 = 0.175 +/- 0.044
+a2 = -0.091 +/- 0.043
+
+
+To the end of chapter 6.1 Results:
+Had the sign of a2 been flipped, a2,lit would only be slightly out of range. To make sure there was no error in the sign, we plotted the fitted function with the sign of a2 changed (appendix figure XX a2flipped.png). It is clearly visible that this function does not fit with the measured data and the sign of a2 was calculated correctly.
+
+
+To the end of chapter 5.2 Gaussian Fit:
+Nevertheless, it supplied a cross-check in the sense that the scaler values behave roughly the same way as the ones obtained by the TAC-signal (see appendix section XX for an analysis of the data obtained by S2)
+
+
+Appendix Chapter about S2:
+(figure scalerdist.png)
+
+The procedure described in section 5.3 was repeated for the data obtained by the scaler S2. For the coefficients ai we got:
+
+a0 = 0.995 +/- 0.008
+a1 = 0.161 +/- 0.049
+a2 = -0.108 +/- 0.047
+
+here a0,lit as well as a1,lit are within the range while a2,lit is notably out of range as before. A look at the plotted function in figure XX shows a similar result to the one presented in section 5.3. 
+
+
+
+Scaler S1
+Angle	Measured	Corrected
+60	1763689		1763689
+75	1763159		1764812
+90	1763096		1766401
+105	1761493		1766451
+120	1756916		1763527
+135	1756281		1764545
+150	1761526		1771442
+165	1759589		1771158
+180	1743748		1756970
