@@ -119,15 +119,18 @@ paramm = [1,0.1,0.01]       # Parameters for Model Fit
 
 """
 # Plot Raw Histogram for angle k
-k = 8
-plt.bar(channelaxis[1:],val[k]/1200.,width=0.15)
-plt.title(r'$\theta =$ %i$^{\circ}$' %ang[k])
-plt.xlim(0,8200)
-plt.ylim(0,0.011)
-plt.xlabel('ADC Channels')
-plt.ylabel(r'Events per second')
-#plt.savefig('180degraw.png')
-plt.show()
+for k in range(9):
+    plt.bar(channelaxis[1:],val[k],width=0.15)
+    plt.title(r'$\theta =$ %i$^{\circ}$' %ang[k])
+    plt.xlim(0,8200)
+    plt.ylim(0,13)
+    plt.xlabel('Channel')
+    plt.ylabel(r'Number of events')
+    plt.savefig(str(ang[k])+'degraw.png',dpi=300)
+    #plt.show()
+    plt.clf()
+    plt.cla()
+    plt.close()
 """
 
 
@@ -165,19 +168,23 @@ for k in range(9):
         #plt.plot([mu-n*sigma]*2,[0,np.amax(y[k])+0.02],'y')
         #plt.plot([mu+n*sigma]*2,[0,np.amax(y[k])+0.02],'y')
     #plt.xlabel('Time delay [ns]')
-    #plt.ylabel(r'Events per time [Hz]')
+    #plt.ylabel(r'Event rate [Hz]')
     #plt.xlim(mu-4*sigma,mu+4*sigma)
     #plt.ylim(0,0.1)
     #plt.legend()
     #plt.savefig(str(ang[k])+'deg.png',dpi=300)
     #plt.show()
+    #plt.clf()
+    #plt.cla()
+    #plt.close()
 
 
 
 # Print Number of Events in Hertz, Background
-print(nevents)
-print(scaler)
-print(bgtot)
+#print(nevents)
+#print(scaler)
+#print(uncerts)
+#print(bgtot)
 
 
 
@@ -186,6 +193,12 @@ ratenorm = nevents/nevents[2]
 uncertnorm = uncerts/nevents[2]
 bgnorm = bgtot/nevents[2]
 scalernorm = scaler/nevents[2]
+scalernorm2 = scaler/scaler[2]
+scaleruncert = []
+for k in scaler:
+    scaleruncert.append(np.sqrt(k))
+scaleruncert = scaleruncert/np.sqrt(1200.)
+scaleruncertnorm = scaleruncert/scaler[2]
 #print(bgnorm)
 
 
@@ -201,12 +214,12 @@ print('a2 = %.3f +/- %.3f' %(popt[2],perr[2]))
 
 
 # Plot Data with Fit and Model
-curve = model(np.arange(55,186,1),*popt)
+curve = model(np.arange(55,186,1),a0,a1,-a2)
 curvemin = model(np.arange(55,186,1),*(popt-perr))
 curvemax = model(np.arange(55,186,1),*(popt+perr))
 theo = model(np.arange(55,186,1),1.,1/8.,1/24.)
 plt.errorbar(ang,ratenorm,yerr=uncertnorm,fmt='go',label='Data')
-#plt.plot(ang,scalernorm,'ko',label='Scaler')
+#plt.errorbar(ang,scalernorm2,yerr=scaleruncertnorm,fmt='ko',label='Scaler')
 plt.plot(np.arange(55,186,1),curve,'b',label='Fit')
 #plt.plot(np.arange(55,186,1),curvemin,'c--',label='Min')
 #plt.plot(np.arange(55,186,1),curvemax,'c--',label='Max')
@@ -216,7 +229,8 @@ plt.title('Normalized Angular Correlation Function')
 plt.xlabel(r'$\theta$ [$^{\circ}$]')
 plt.ylabel(r'$W(\theta)$')
 legend = plt.legend(loc='upper left')
-#plt.show()
-plt.savefig('dist.png',dpi=300)
+plt.show()
+#plt.savefig('a2flipped.png',dpi=300)
+
 
 
