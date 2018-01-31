@@ -14,16 +14,16 @@ Angle		Events(PC)	Events(S2)	Events(S1)
 
 
 Rebinned, Background subtracted, etc. data
-Angle		Rate(PC)	Rate(Scaler)	Background
-60		3.42+/-0.05	4.34+/-0.06	0.15	
-75		3.24...		4.09...		0.13
-90		3.23		4.12		0.08
-105		3.30	 	4.16		0.06
-120		3.36		4.20		0.08
-135		3.42		4.29		0.08
-150		3.50		4.35		0.11
-165		3.47		4.35		0.11
-180		3.54		4.31		0.13
+Angle		Rate(PC)	Rate(S1)	Rate(S2)
+60		3.42+/-0.05	4.34+/-0.06	1470+/-1	
+75		3.24...		4.09...		1469...
+90		3.23		4.12		1469
+105		3.30	 	4.16		1468
+120		3.36		4.20		1464
+135		3.42		4.29		1464
+150		3.50		4.35		1468
+165		3.47		4.35		1466
+180		3.54		4.31		1453
 
 
 a0 = 1.003 +/- 0.007
@@ -37,6 +37,21 @@ Had the sign of a2 been flipped, a2,lit would only be slightly out of range. To 
 
 To the end of chapter 5.2 Gaussian Fit:
 Nevertheless, it supplied a cross-check in the sense that the scaler values behave roughly the same way as the ones obtained by the TAC-signal (see appendix section XX for an analysis of the data obtained by S2)
+
+
+To the end of chapter 5.2 Gaussian Fit:
+Since Scaler S1 was expected to measure the same value for each of the nine measurements, it was used to check for systematic errors (see section 6.2 Discussion of Error Sources)
+
+
+To chapter 6.2 Error Sources:
+To make an estimation of the systematic error in our experiment, we plotted the event rate measured by the scaler S1 for each of the nine measurements (see apendix XX). Since S1 is connected to the fixed detector $D_l$, it is expected to measure the same rate every time. However, it is visible that the rate registered by S1 increases over the course of the nine measurements (we started with $\theta = 180^{\circ}$, decreasing the angle in steps of $15^{\circ}$), with the first measurement clearly standing out. 
+
+A linear fit (appendix, figure XX) shows an average increase of around $0.1\%$ per measurement. In addition to that, we can see an oscillation of our data points around the linear fit, which is especially strong in the first 4$-$5 measurements (angles $180^{\circ}$ down to $120^{\circ}$). Both of these effects lead to the conclusion that our experiment lacks stability, especially in the first half of the measurements (high angles). This also complies with the observation that our measured values for angles above $135^{\circ}$ do not correspond to the predicted angular correlation function well.
+
+
+Appendix Chapter about S1:
+(figure scaler1.png)
+
 
 
 Appendix Chapter about S2:
@@ -63,3 +78,8 @@ Angle	Measured	Corrected
 150	1761526		1771442
 165	1759589		1771158
 180	1743748		1756970
+
+To make an estimation of the systematic error in our experiment, we plotted the number of events measured by the scaler S1 for each of the nine measurements. Since S1 is connected to the fixed detector $D_l$, it is expected to measure the same number of events every time. However, it is visible that the number of events registered by S1 increases over the course of the nine measurements (we started with $\theta = 180^{\circ}$, decreasing the angle in steps of $15^{\circ}$), with the first measurement clearly standing out. 
+
+A linear fit (figure XX) shows an average increase of around $0.1\%$ per measurement. In addition to that, we can see an oscillation of our data points around the linear fit, which is especially strong in the first 4$-$5 measurements (angles $180^{\circ}$ down to $120^{\circ}$). Both of these effects lead to the conclusion that our experiment lacks stability, especially in the first half of the measurements (high angles). This also complies with the observation that our measured values for angles above $135^{\circ}$ do not correspond to the predicted angular correlation function well.
+
